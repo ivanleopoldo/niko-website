@@ -1,6 +1,15 @@
-import React from 'react';
-import { AlertOutlined, CalendarOutlined, HeatMapOutlined, MailOutlined, MessageOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons';
-import { MenuProps } from 'antd';
+import React, { useState } from 'react';
+import {
+  AlertOutlined,
+  CalendarOutlined,
+  HeatMapOutlined,
+  LaptopOutlined,
+  MailOutlined,
+  MessageOutlined,
+  NotificationOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
+import type { MenuProps } from 'antd';
 import { Breadcrumb, Layout as AntLayout, Menu, theme } from 'antd';
 import { IconMap } from 'antd/es/result';
 import { icons } from 'antd/es/image/PreviewGroup';
@@ -9,12 +18,14 @@ import Icon from '@ant-design/icons/lib/components/Icon';
 const { Header, Content, Sider } = AntLayout;
 
 export function Home() {
-  const items1 = ['Home', 'Jobs'].map((key) => ({
+  const [selectedItem, setSelectedItem] = useState('Home');
+
+  const items1: MenuProps['items'] = ['Home', 'Jobs', 'Search'].map((key) => ({
     key,
     label: `${key}`,
   }));
 
-  const items2 = [
+  const items2: MenuProps['items'] = [
     {
       key: 'Profile',
       icon: <UserOutlined />,
@@ -23,7 +34,6 @@ export function Home() {
         {
           key: '1',
           label: 'Settings',
-          
         },
         {
           key: '2',
@@ -36,30 +46,28 @@ export function Home() {
       ],
     },
     {
-        key: 'Notification',
-        icon: <NotificationOutlined />,
-        label: 'Notifications',
-        children: [
-          {
-            key: '1',
-            icon: <MessageOutlined />,
-            label: 'Message',
-            
-          },
-          {
-            key: '2',
-            icon: <CalendarOutlined  />,
-            Label: 'Calendar',
-            
-          },
-        ],
+      key: 'Notification',
+      icon: <NotificationOutlined />,
+      label: 'Notifications',
+      children: [
+        {
+          key: '1',
+          icon: <MessageOutlined />,
+          label: 'Message',
+        },
+        {
+          key: '2',
+          icon: <CalendarOutlined />,
+          label: 'Calendar',
+        },
+      ],
     },
     {
       key: '1',
-      icon: <HeatMapOutlined/>,
+      icon: <HeatMapOutlined />,
       label: 'Map',
-  },
-];
+    },
+  ];
 
   const {
     token: { colorBgContainer },
@@ -95,7 +103,13 @@ export function Home() {
               background: colorBgContainer,
             }}
           >
-            {/* Content */}
+            {selectedItem === 'Search' ? (
+              <div>
+                <input type="text" placeholder="Search" />
+              </div>
+            ) : (
+              <div>{selectedItem}</div>
+            )}
           </Content>
         </AntLayout>
       </AntLayout>
