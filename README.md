@@ -15,11 +15,7 @@
   - [ ] ....Many others (add more)
   
 #### Mobile App
-- [ ] Add Capacitor and Ionic
-  - Capacitor
-    - Converts React WebApp to React Native application using WebView component of React Native. It is like a web browser mobile app that only shows the React Web App.
-  - Ionic
-    - A UI toolkit that is compatible with the web and native mobile app.
+- [ ] Use WebView in React Native Expo
 
 
 
