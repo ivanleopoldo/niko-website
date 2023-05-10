@@ -10,7 +10,7 @@ export function Login() {
 
   const handleClick = () => {
     const Uname = form.getFieldValue('username');
-    const Id = form.getFieldValue('password');
+    const Id = form.getFieldValue('password'); 
 
     if (Uname && Id) {
       navigate('Home');

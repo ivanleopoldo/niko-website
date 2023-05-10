@@ -1,13 +1,24 @@
-import { Routes, Route } from 'react-router-dom';
-import { Home, Login } from './pages';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import MainApp from './App';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Map from './pages/Map';
 
-function App(){
+const App = ()=> {
   return (
-    <Routes>
-      <Route path='/' element={<Login />}></Route>
-      <Route path='/home' element={<Home />}></Route>
-    </Routes>
-  );
-}
+      <div className='app'>
+        <Routes>
+          <Route path = '/' element={<Login/>}/>
+          <Route path='/Home' element={<Home/>}/>
+          <Route path='/Map' element={<Map/>}/>
+        </Routes>
+      </div>
 
-export default App;
+
+  );
+};
+
+
+export default App
