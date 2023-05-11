@@ -10,6 +10,7 @@ function Navbar() {
   <input type="text" placeholder="Search" class="input-bordered input w-full max-w-xs center" />
   </div>
   <div>
+  <a class="btn btn-ghost normal-case text-xl" href="Home">Home</a>
   </div>
   <div class="flex-2">
     <a class="btn btn-ghost normal-case text-xl">Jobs</a>
