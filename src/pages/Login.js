@@ -1,86 +1,37 @@
-import React from 'react';
-import { Form, Input, Button, Checkbox, message } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { Navigate, useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react'
+import { UserAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
-export function Login() {
+const Login = () => {
+  const { currentUser, signinWithGoogle } = UserAuth();
   const navigate = useNavigate();
-
-  const onFinish = (values) => {};
-
-  const handleClick = () => {
-    const Uname = form.getFieldValue('username');
-    const Id = form.getFieldValue('password'); 
-
-    if (Uname && Id) {
-      navigate('Home');
-    } else {
-      message('Error handling');
+  
+  const handleGoogleLogin = async () => {
+    try {
+      await signinWithGoogle();
+    } catch(e){
+      console.log(e);
     }
-  };
+  }
 
-  const [form] = Form.useForm();
+  useEffect(() => {
+    if (currentUser){
+      navigate("/home");
+    }
+  }, [currentUser]);
+
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      <div style={{ width: 400 }}>
-        <h1 style={{ textAlign: 'center' }}>Tekniko</h1>
-
-        <Form
-          form={form}
-          name="normal_login"
-          className="login-form"
-          initialValues={{
-            remember: true,
-          }}
-          onFinish={onFinish}
-        >
-          <Form.Item
-            name="username"
-            id="Uname"
-            rules={[
-              {
-                required: true,
-                message: 'Please input your Username!',
-              },
-            ]}
-          >
-            <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
-          </Form.Item>
-
-          <Form.Item
-            name="password"
-            id="Id"
-            rules={[
-              {
-                required: true,
-                message: 'Please input your Password!',
-              },
-            ]}
-          >
-            <Input prefix={<LockOutlined className="site-form-item-icon" />} type="password" placeholder="Password" />
-          </Form.Item>
-
-          <Form.Item>
-            <Form.Item name="remember" valuePropName="checked" noStyle>
-              <Checkbox>Remember me</Checkbox>
-            </Form.Item>
-
-            <a className="login-form-forgot" href="">
-              Forgot password
-            </a>
-          </Form.Item>
-
-          <Form.Item>
-            <Button onClick={handleClick} type="primary" htmlType="submit" className="login-form-button">
-              Log in
-            </Button>
-            Or <a href="">register now!</a>
-          </Form.Item>
-        </Form>
+    <div className="hero min-h-screen bg-base-200">
+      <div className="hero-content text-center">
+        <div className="max-w-md">
+          <h1 className="text-5xl font-bold">Tekniko</h1>
+          <p className="py-6">Login</p>
+          <button onClick={handleGoogleLogin} className="btn">Login with Google</button>
+        </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default Login;
+export default Login

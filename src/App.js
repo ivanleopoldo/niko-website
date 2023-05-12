@@ -1,20 +1,20 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import MainApp from './App';
+import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Map from './pages/Map';
+import { AuthProvider } from './context/AuthContext';
+import { PrivateRoute } from './routes/PrivateRoute';
 
 const App = ()=> {
   return (
-      <div className='app'>
+      <AuthProvider>
         <Routes>
           <Route path = '/' element={<Login/>}/>
-          <Route path='/Home' element={<Home/>}/>
+          <Route path='/Home' element={<PrivateRoute><Home/></PrivateRoute>}/>
           <Route path='/Map' element={<Map/>}/>
         </Routes>
-      </div>
+      </AuthProvider>
 
 
   );
