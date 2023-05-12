@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Map from './pages/Map';
 import { AuthProvider } from './context/AuthContext';
 import { PrivateRoute } from './routes/PrivateRoute';
+import Register from './pages/Register';
 
 const App = ()=> {
   return (
@@ -12,7 +13,7 @@ const App = ()=> {
         <Routes>
           <Route path = '/' element={<Login/>}/>
           <Route path='/Home' element={<PrivateRoute><Home/></PrivateRoute>}/>
-          <Route path='/Map' element={<Map/>}/>
+          <Route path='/register' element={<Register/>}/>
         </Routes>
       </AuthProvider>
 
