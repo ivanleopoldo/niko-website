@@ -1,11 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal, Card } from '../components';
+import { db } from '../config';
+import { collection, onSnapshot } from 'firebase/firestore';
 
 function Content() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [data, setData] = useState([]);
 
   const handleModalOpen = () => setIsModalOpen(true);
   const handleModalClose = () => setIsModalOpen(false);
+
+  async function fetchData(){
+    onSnapshot(collection(db, 'professionals'), res => {
+      const newData = res.docs.map(doc => doc.data());
+      setData(newData);
+    });
+  };
+
+  useEffect(()=>{
+    fetchData();
+  }, []);
 
   return (
     <div className='tableContent'>
@@ -27,36 +41,40 @@ function Content() {
           </thead>
           <tbody>
             {/* row 1 */}
-            <tr>
-              <th>
-                <label>
-                </label>
-              </th>
-              <td>
-                <div className="flex items-center space-x-3">
-                  <div className="avatar">
-                    <div className="mask mask-squircle w-12 h-12">
-                      <img src={require("../images/her78.PNG")} alt="Avatar Tailwind CSS Component" />
+            { data.map(({full_name, bio, tags}) => {
+              return (
+                <tr>
+                  <th>
+                    <label>
+                    </label>
+                  </th>
+                  <td>
+                    <div className="flex items-center space-x-3">
+                        <div className="avatar">
+                          <div className="mask mask-squircle w-12 h-12">
+                            <img src={require("../images/her78.PNG")} alt="Avatar Tailwind CSS Component" />
+                          </div>
+                        </div>
+                        <div>
+                          <div className="font-bold">{ full_name }</div>
+                          <div className="text-sm opacity-50">{ bio }</div>
+                          <div className="text-sm opacity-50" placeholder='Year started: '>{ tags[0] }</div>
+                        </div>
                     </div>
-                  </div>
-                  <div>
-                    <div className="font-bold">Xiao bao mao</div>
-                    <div className="text-sm opacity-50">Mandaue,Cebucity</div>
-                    <div className="text-sm opacity-50" placeholder='Year started: '>4/15/2023</div>
-                  </div>
-                </div>
-              </td>
-              <td className="text-center">
-                  {/* Job */}
-                 <span className="badge badge-ghost badge-sm mt-auto">Electrician</span>
-              </td>
-              <td>Tesda Certified</td>
-              <th>
-                <button className="btn btn-outline btn-info" onClick={handleModalOpen}>
-                  Details
-                </button>
-              </th>
-            </tr>
+                  </td>
+                  <td className="text-center">
+                      {/* Job */}
+                    <span className="badge badge-ghost badge-sm mt-auto">Electrician</span>
+                  </td>
+                  <td>Tesda Certified</td>
+                  <th>
+                    <button className="btn btn-outline btn-info" onClick={handleModalOpen}>
+                      Details
+                    </button>
+                  </th>
+                </tr>
+              );
+            }) }
           {/* row 2 */}
           </tbody>
           {/* foot */}

@@ -6,13 +6,13 @@ import { getFirestore } from "firebase/firestore";
     FOR DEVELOPMENT PURPOSES ONLY
 */
 const firebaseConfig = {
-    apiKey: "AIzaSyDi1Xo_Q4hyixmhmTMPcxROErUcEHEoJK8",
-    authDomain: "nikodb-5e1dd.firebaseapp.com",
-    projectId: "nikodb-5e1dd",
-    storageBucket: "nikodb-5e1dd.appspot.com",
-    messagingSenderId: "684282764864",
-    appId: "1:684282764864:web:bc65b6d7eb65b9f9c309a5",
-    measurementId: "G-GNQW0HKR4P"
+    apiKey: process.env.API_KEY,
+    authDomain: process.env.AUTH_DOMAIN,
+    projectId: process.env.PROJECT_ID,
+    storageBucket: process.env.STORAGE_BUCKET,
+    messagingSenderId: process.env.MESSAGING_SENDER_ID,
+    appId: process.env.APP_ID,
+    measurementId: process.env.MEASUREMENT_ID
 };
 
 const app = initializeApp(firebaseConfig);
