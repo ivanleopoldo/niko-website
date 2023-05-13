@@ -63,7 +63,13 @@ function Content() {
         </table>
       </div>
       <Modal isOpen={isModalOpen} onClose={handleModalClose}>
-        <Card />
+        <Card 
+          image={require('../images/her78.PNG')} 
+          name='what the dog doin?'
+          bio='i woke up in a new bugatti'
+          date='01/15/1748'
+          tags={['Electrician', '3 Years Experience']}
+        />
       </Modal>
     </div>
   );

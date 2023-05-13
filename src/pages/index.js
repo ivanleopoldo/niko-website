@@ -1,13 +1,6 @@
-ReactDOM.render(
-    <React.StrictMode>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/map" element={<Map />} />
-          <Route path="/login" element={<Login />} />
-        </Routes>
-      </BrowserRouter>
-    </React.StrictMode>,
-    document.getElementById('root')
-  );
+import Home from "./Home";
+import Login from "./Login";
+import Map from "./Map";
+import Register from "./Register";
+
+export { Home, Login, Map, Register };

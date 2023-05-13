@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { UserAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+function Login() {
   const { currentUser, signinWithGoogle } = UserAuth();
   const navigate = useNavigate();
   
@@ -34,4 +34,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Login;

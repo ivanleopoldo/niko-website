@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const Register = () => {
+function Register(){
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
     function togglePasswordVisibility() {
@@ -61,4 +61,4 @@ const Register = () => {
     )
 }
 
-export default Register
+export default Register;
