@@ -63,7 +63,7 @@ function Content() {
         </table>
       </div>
       <Modal isOpen={isModalOpen} onClose={handleModalClose}>
-        <Cards />
+        <Card />
       </Modal>
     </div>
   );
