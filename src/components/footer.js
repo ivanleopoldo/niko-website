@@ -1,7 +1,7 @@
 import { Divider } from 'antd'
 import React from 'react'
 
-export function footer() {
+function Footer() {
   return (
     <div className='foot'>
         <footer class="footer footer-center p-4 bg-base-300 text-base-content">
@@ -14,4 +14,4 @@ export function footer() {
   )
 }
 
-export default footer
+export default Footer;

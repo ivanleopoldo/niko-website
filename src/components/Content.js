@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import Modal from './modal';
-import Cards from './cards';
+import { Modal, Card } from '../components';
 
 function Content() {
   const [isModalOpen, setIsModalOpen] = useState(false);

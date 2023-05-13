@@ -1,10 +1,6 @@
 import React from 'react';
-import Navbar from '../components/Navbar';
-import Drawerleft from '../components/drawerleft';
-import Footer from '../components/footer';
-import Content from '../components/Content';
-import cards from '../components/cards';
-import Pagination from '../components/pagination';
+import { Navbar, DrawerLeft, Footer, Content, Card, Pagination } from '../components';
+
 function Home() {
   return (
     <div className="flex flex-col min-h-screen">
