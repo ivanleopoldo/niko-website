@@ -16,7 +16,7 @@ function Login() {
 
   useEffect(() => {
     if (currentUser){
-      navigate("/home");
+      navigate("/Home");
     }
   }, [currentUser]);
 
@@ -26,7 +26,7 @@ function Login() {
       <div className="hero-content text-center">
         <div className="max-w-md">
           <h1 className="text-5xl font-bold">Tekniko</h1>
-          <p className="py-6">Login</p>
+          <a href='Home'>Login</a>
           <button onClick={handleGoogleLogin} className="btn">Login with Google</button>
         </div>
       </div>
