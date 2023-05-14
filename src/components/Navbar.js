@@ -1,9 +1,12 @@
 import daisyui from "daisyui"
 import { IconName } from '@heroicons/react/24/outline';
 import { UserAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation,Link } from "react-router-dom";
 
 function Navbar({image, name }) {
+
+  const location = useLocation();
+
   const { logout } = UserAuth();
 
   const handleLogout = async () => {
@@ -25,10 +28,10 @@ function Navbar({image, name }) {
           <input type="text" placeholder="Search" class="input-bordered input w-full max-w-xs center" />
         </div>
         <div>
-          <a class="btn btn-ghost normal-case text-xl" href="Home">Home</a>
+          <a class="btn btn-ghost normal-case text-xl" href="/Freelance">Home</a>
         </div>
         <div class="flex-2">
-          <a class="btn btn-ghost normal-case text-xl">Jobs</a>
+            <a class="btn btn-ghost normal-case text-xl" href="/Jobs">Jobs</a>
         </div>
         <div class="dropdown dropdown-end">
           <label tabindex="0" class="btn btn-ghost normal-case text-xl mr-8">

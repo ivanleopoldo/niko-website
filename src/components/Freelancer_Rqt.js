@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Card } from '../components';
+import { MessageModal, Fcard} from '../components';
 import { db } from '../config';
 import { collection, onSnapshot } from 'firebase/firestore';
 
-function Content() {
+export function Freelancer_Rqt() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [data, setData] = useState([]);
 
@@ -33,9 +33,9 @@ function Content() {
                 </label>
               </th>
               <th>Name</th>
-              <th>Job</th>
-              <th>Certification</th>
-              <th>View</th>
+              <th>Job Specific </th>
+              <th>Problem Description</th>
+              <th>Message</th>
               <th></th>
             </tr>
           </thead>
@@ -69,8 +69,8 @@ function Content() {
                   </td>
                   <td>Tesda Certified</td>
                   <th>
-                    <button className="btn btn-outline btn-info" onClick={handleModalOpen}>
-                      Details
+                    <button className="btn btn-outline btn-success" onClick={handleModalOpen}>
+                     Message
                     </button>
                   </th>
                 </tr>
@@ -81,17 +81,17 @@ function Content() {
           {/* foot */}
         </table>
       </div>
-      <Modal isOpen={isModalOpen} onClose={handleModalClose}>
-        <Card 
+      <MessageModal isOpen={isModalOpen} onClose={handleModalClose}>
+        <Fcard 
           image={require('../images/her78.PNG')} 
           name='what the dog doin?'
           bio='i woke up in a new bugatti'
           date='01/15/1748'
           tags={['Electrician', '3 Years Experience']}
         />
-      </Modal>
+      </MessageModal>
     </div>
   );
 }
 
-export default Content;
+export default Freelancer_Rqt
