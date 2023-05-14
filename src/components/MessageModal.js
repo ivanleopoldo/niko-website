@@ -18,7 +18,9 @@ export function MessageModal({ isOpen, onClose, children }) {
         <div className="modal-box">
           {children}
           <div>
+            <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"></hr>
             <Messages/>
+            <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"></hr>
           </div>
           <div className="modal-action">
             <label htmlFor="my-modal" className="btn btn-secondary flex flex-justify center">
