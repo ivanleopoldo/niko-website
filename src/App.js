@@ -11,7 +11,7 @@ const App = ()=> {
           <Route path='/home' element={<PrivateRoute><Home/></PrivateRoute>}/>
           <Route path='/register' element={<Register/>}/>
           <Route path='/map'/>
-          <Route path='/Freelance' element={<Freelance/>}/>
+          <Route path='/freelance' element={<Freelance/>}/>
           <Route path='/Jobs' element={<Jobs/>}/>
         </Routes>
       </AuthProvider>

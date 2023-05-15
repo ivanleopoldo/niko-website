@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, collection, onSnapshot } from "firebase/firestore";
 
 /* 
     FOR DEVELOPMENT PURPOSES ONLY
@@ -15,7 +15,18 @@ const firebaseConfig = {
     measurementId: process.env.REACT_APP_MEASUREMENT_ID
 };
 
-const app = initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
 export const db = getFirestore(app);
+
+class FirebaseConnection{
+    fetchAllData(collection_name){
+        return collection(db, collection_name);
+    }
+    addData(){
+        
+    }
+}
+
+export const Firebase = new FirebaseConnection();
