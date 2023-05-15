@@ -4,9 +4,10 @@ import { Freelancer_Rqt, Navbar,Footer,Pagination } from '../components'
 export function Freelance() {
   return (
     <div>
-      <div>
+      <div className='background-cyan'>
         <Navbar/>
         <div>
+          <hr></hr>
         <div className="flex flex justify-center items-center mt-3">
         <Freelancer_Rqt/>
       </div>
