@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, useEffect } from "react";
-import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth";
+import { signInWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth";
 import { auth } from "../config";
 
 // create context
@@ -14,14 +14,26 @@ export const AuthProvider = ({ children }) => {
     const signinWithGoogle = () => {
         const provider = new GoogleAuthProvider();
         signInWithPopup(auth, provider);
-            
     }
+
+    // signin w/o google
+    const signIn = (email, password) => {
+        signInWithEmailAndPassword(auth, email, password)
+        .then((user) => {
+            
+        })
+        .catch((e)=>{
+            console.log(e.message);
+        });
+    }
+
 
     // signout
     const logout = () => signOut(auth);
     const value = {
         currentUser,
         signinWithGoogle,
+        signIn,
         logout
     }
 

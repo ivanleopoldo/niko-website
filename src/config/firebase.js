@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getFirestore, collection, onSnapshot } from "firebase/firestore";
+import { getFirestore, collection } from "firebase/firestore";
 
 /* 
     FOR DEVELOPMENT PURPOSES ONLY
