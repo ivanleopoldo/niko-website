@@ -50,11 +50,11 @@ function Navbar({image, name }) {
           <div class="dropdown dropdown-end">
             <label tabindex="0" class="btn btn-ghost btn-circle avatar avatar online px-30">
               <div class="w-10 rounded-full">
-                <img src={require('../images/her78.PNG')} alt="User picture" />
+                <img src={image} alt="User picture" />
               </div>
             </label>
             <ul tabindex="0" class="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
-              <span class="ml-10">Xio bao mao</span>
+              <span class="ml-10">{name}</span>
               <li>
                 <a class="justify-between">
                   Profile

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Card } from '../components';
-import { db } from '../config';
-import { collection, onSnapshot } from 'firebase/firestore';
+import { Firebase } from '../config';
+import { onSnapshot } from 'firebase/firestore';
 
 function Content() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -10,16 +10,11 @@ function Content() {
   const handleModalOpen = () => setIsModalOpen(true);
   const handleModalClose = () => setIsModalOpen(false);
 
-  async function fetchData(){
-    onSnapshot(collection(db, 'professionals'), res => {
-      const newData = res.docs.map(doc => doc.data());
-      setData(newData);
-    });
-  };
-
   useEffect(()=>{
-    fetchData();
-  }, []);
+    onSnapshot(Firebase.fetchAllData('professionals'), snapshot => {
+      setData(snapshot.docs.map(doc => doc.data()));
+    })
+  }, [data]);
 
   return (
     <div className='tableContent'>
@@ -41,9 +36,9 @@ function Content() {
           </thead>
           <tbody>
             {/* row 1 */}
-            { data.map(({full_name, bio, tags}) => {
+            { data.map(({full_name, specialization, bio, tags}, index) => {
               return (
-                <tr>
+                <tr key={index}>
                   <th>
                     <label>
                     </label>
@@ -65,7 +60,7 @@ function Content() {
                   </td>
                   <td className="text-center">
                       {/* Job */}
-                    <span className="badge badge-ghost badge-sm mt-auto">Electrician</span>
+                    <span className="badge badge-ghost badge-sm mt-auto">{ specialization }</span>
                   </td>
                   <td>Tesda Certified</td>
                   <th>

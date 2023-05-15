@@ -1,9 +1,12 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { UserAuth } from '../context/AuthContext';
 import { useNavigate,Link } from 'react-router-dom';
+import GoogleButton from 'react-google-button';
 
 function Login() {
-  const { currentUser, signinWithGoogle } = UserAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { currentUser, signinWithGoogle, signIn } = UserAuth();
   const navigate = useNavigate();
   
   const handleGoogleLogin = async () => {
@@ -14,30 +17,42 @@ function Login() {
     }
   }
 
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    await signIn(email, password);
+  }
+
   useEffect(() => {
     if (currentUser){
-      navigate("/Home");
+      navigate("/home");
     }
-  }, [currentUser]);
-
+  }, [currentUser, navigate]);
 
   return (
     <div className="hero min-h-screen bg-base-200">
       <div className="hero-content text-center">
-        <div className="max-w-md ">
+        <div className="max-w-md">
+          <h1 className="text-5xl font-bold">Tekniko</h1>
+          <form onSubmit={handleLogin} className="form-control">
+            <label className="label">
+              <span className="label-text">Email</span>
+            </label>
+            <input name="email" value={email} onChange={(e) => setEmail(e.target.value)} type="email" className="input input-bordered" required/>
+            <label className="label">
+              <span className="label-text">Password</span>
+            </label>
+            <input name="password" value={password} onChange={(e) => setPassword(e.target.value)} type="password" className="input input-bordered" required/>
+            <label className="label">
+              <span className="label-text-alt"></span>
+              <span className="label-text-alt hover:text-blue-300" onClick={()=>alert('hello')}>Forgot Password?</span>
+            </label>
+            <br></br>
+            <button className="btn btn-success">Login</button>
+          </form>
+          <div className="divider"> OR </div>
+          <GoogleButton type="dark" onClick={handleGoogleLogin} label="Sign in with Google"/>
           <div>
-              <button className="btn btn-success no-animation">TEKNIKO</button>
-            </div>
-          <input type="text" placeholder="Username" className="input w-full max-w-xs" required />
-          <input type="password" placeholder="Password" className="input w-full max-w-xs mt-2.5" required />
-          <div>
-              <button className='btn no-animation mt-3.5 mb-2.5 '>Login</button>
-          </div>
-          <div className="collapse-content bg-primary text-primary-content peer-checked:bg-secondary peer-checked:text-secondary-content"></div>
-          <hr></hr>
-          <div className='mt-2.5'>
-          <button onClick={handleGoogleLogin} className="btn btn-success">Login with Google</button>
-          <button className="btn btn-info ml-2.5">register</button>
+            <p className="text-xs py-2.5 opacity-50">Don't have an Account? <span className="text-blue-400 hover:text-blue-300" onClick={() => alert('hello')}>Register Now!</span></p>
           </div>
         </div>
       </div>

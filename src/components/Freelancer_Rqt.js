@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { MessageModal, Fcard} from '../components';
-import { db } from '../config';
-import { collection, onSnapshot } from 'firebase/firestore';
+import { Firebase, db, auth } from '../config';
 
 export function Freelancer_Rqt() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -10,15 +9,7 @@ export function Freelancer_Rqt() {
   const handleModalOpen = () => setIsModalOpen(true);
   const handleModalClose = () => setIsModalOpen(false);
 
-  async function fetchData(){
-    onSnapshot(collection(db, 'professionals'), res => {
-      const newData = res.docs.map(doc => doc.data());
-      setData(newData);
-    });
-  };
-
   useEffect(()=>{
-    fetchData();
   }, []);
 
   return (
@@ -41,7 +32,7 @@ export function Freelancer_Rqt() {
           </thead>
           <tbody>
             {/* row 1 */}
-            { data.map(({full_name, bio, tags}) => {
+            { data.map(({full_name, bio, specialization, tags}) => {
               return (
                 <tr>
                   <th>
@@ -56,16 +47,15 @@ export function Freelancer_Rqt() {
                           </div>
                         </div>
                         <div>
-                          <div className="font-bold">{ full_name }</div>
+                          <div className="font-bold">{ specialization }</div>
                           <div className="text-sm opacity-50">{ bio }</div>
-                          <div className="text-sm opacity-50" placeholder='Year started: '>{ tags[0] }</div>
-                          
+                          <div className="text-sm opacity-50" placeholder='Year started: '>{ specialization }</div>
                         </div>
                     </div>
                   </td>
                   <td className="text-center">
                       {/* Job */}
-                    <span className="badge badge-ghost badge-sm mt-auto">Electrician</span>
+                    <span className="badge badge-ghost badge-sm mt-auto">{ specialization }</span>
                   </td>
                   <td>Tesda Certified</td>
                   <th>

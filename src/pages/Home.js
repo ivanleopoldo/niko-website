@@ -1,10 +1,11 @@
 import React from 'react';
 import { Navbar, DrawerLeft, Footer, Content, Card, Pagination } from '../components';
+import { auth } from '../config';
 
 function Home() {
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar />
+      <Navbar name={auth.currentUser.displayName} image={auth.currentUser.photoURL} />
       <div className="flex flex justify-center items-center mt-3">
         <Content />
       </div>
