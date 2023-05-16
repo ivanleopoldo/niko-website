@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MessageModal, Fcard} from '../components';
+import { MessageModal, Fcard} from '.';
 import { Firebase, db, auth } from '../config';
 
 export function Freelancer_Rqt() {

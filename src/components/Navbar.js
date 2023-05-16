@@ -1,13 +1,13 @@
-import daisyui from "daisyui"
 import { IconName } from '@heroicons/react/24/outline';
 import { UserAuth } from "../context/AuthContext";
-import { useNavigate,useLocation,Link } from "react-router-dom";
-
+import { useNavigate,useLocation,navigate} from "react-router-dom";
 function Navbar({image, name }) {
 
   const location = useLocation();
 
   const { logout } = UserAuth();
+
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
@@ -17,6 +17,16 @@ function Navbar({image, name }) {
       console.log(e);
     }
   }
+  
+  const handleProf = async (e) =>{
+      navigate('Profile');
+      
+  }
+
+  const handleFProf = async (e) =>{
+    navigate('ProfileLance');
+    
+}
 
   return (
     <nav className='nav'>
@@ -56,13 +66,19 @@ function Navbar({image, name }) {
             <ul tabindex="0" class="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
               <span class="ml-10">{name}</span>
               <li>
-                <a class="justify-between">
+                <a class="justify-between" onClick={handleProf} > 
                   Profile
                   <span class="badge">New</span>
                 </a>
               </li>
               <li>
-                <a>Settings</a>
+                <a class="justify-between" onClick={handleFProf} > 
+                  Freelance Profile
+                  <span class="badge">New</span>
+                </a>
+              </li>
+              <li>
+                {/* <a>Settings</a> */}
               </li>
               <li>
                 <a onClick={handleLogout}>Logout</a>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { UserAuth } from '../context/AuthContext';
-import { useNavigate,Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import GoogleButton from 'react-google-button';
 
 function Login() {
@@ -20,6 +20,10 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     await signIn(email, password);
+  }
+  
+  const handleRegister = async (e) =>{
+    navigate("/register");
   }
 
   useEffect(() => {
@@ -52,7 +56,7 @@ function Login() {
           <div className="divider"> OR </div>
           <GoogleButton type="dark" onClick={handleGoogleLogin} label="Sign in with Google"/>
           <div>
-            <p className="text-xs py-2.5 opacity-50">Don't have an Account? <span className="text-blue-400 hover:text-blue-300" onClick={() => alert('hello')}>Register Now!</span></p>
+            <p className="text-xs py-2.5 opacity-50">Don't have an Account? <span className="text-blue-400 hover:text-blue-300" onClick={handleRegister}>Register Now!</span></p>
           </div>
         </div>
       </div>

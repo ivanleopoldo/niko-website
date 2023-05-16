@@ -30,6 +30,7 @@ function Content() {
               <th>Name</th>
               <th>Job</th>
               <th>Certification</th>
+              <th>Rating</th>
               <th>View</th>
               <th></th>
             </tr>
@@ -63,6 +64,15 @@ function Content() {
                     <span className="badge badge-ghost badge-sm mt-auto">{ specialization }</span>
                   </td>
                   <td>Tesda Certified</td>
+                  <td>
+                  <div className="rating rating-md">
+                      <input type="radio" name="rating-7" className="mask mask-star-2 bg-orange-400" />
+                      <input type="radio" name="rating-7" className="mask mask-star-2 bg-orange-400" />
+                      <input type="radio" name="rating-7" className="mask mask-star-2 bg-orange-400" />
+                      <input type="radio" name="rating-7" className="mask mask-star-2 bg-orange-400" />
+                      <input type="radio" name="rating-7" className="mask mask-star-2 bg-orange-400" />
+                </div>
+                  </td>
                   <th>
                     <button className="btn btn-outline btn-info" onClick={handleModalOpen}>
                       Details

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, DrawerLeft, Footer, Content, Card, Pagination } from '../components';
+import { Navbar, Footer, Content, Pagination } from '../components';
 import { auth } from '../config';
 
 function Home() {
