@@ -1,6 +1,7 @@
 import { IconName } from '@heroicons/react/24/outline';
 import { UserAuth } from "../context/AuthContext";
 import { useNavigate,useLocation,navigate} from "react-router-dom";
+
 function Navbar({image, name }) {
 
   const location = useLocation();
