@@ -12,8 +12,8 @@ const App = ()=> {
           <Route path='/register' element={<Register/>}/>
           <Route path='/freelance' element={<Freelance/>}/>
           <Route path='/Jobs' element={<Jobs/>}/>
-          <Route path='/Profile' element={<Profile/>}/>
-          <Route path='/ProfileLance' element={<ProfileLance/>}/>
+          <Route path='/profile' element={<Profile/>}/>
+          <Route path='/profileLance' element={<ProfileLance/>}/>
         </Routes>
       </AuthProvider>
   );
