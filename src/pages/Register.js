@@ -1,32 +1,31 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import {Range} from '../components';
+import { provinces, getCityMunByProvince } from '../constants';
+import GoogleButton from 'react-google-button';
 
-function Register() {
-  const [password, setPassword] = useState('');
-  const [confirmPassword] = useState('');
-  const [isChecked, setIsChecked] = useState(false);
-  const navigate = useNavigate();
+function Register(){
+    const [isChecked, setChecked] = useState(false);
 
-  function togglePasswordVisibility() {
-    setIsPasswordVisible((prevState) => !prevState);
-  }
+    const [province, setProvince] = useState("");
+    const [provCode, setProvCode] = useState("");
+    const [city, setCity] = useState("");
+    const [step, setStep] = useState(1);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [username, setUsername] = useState("");
+    const [bio, setBio] = useState("");
+    const [birthdate, setBirthdate] = useState(null);
+    const [image, setImage] = useState(null);
 
-    if (password !== confirmPassword) {
-      // Passwords do not match, show an error message or handle the validation as desired
-      console.log('Passwords do not match');
-      return;
+    const selectProvince = (e) => {
+        const selected = provinces.find((entry) => entry.name === e.target.value);
+        setProvince(selected.name);
+        setProvCode(selected.prov_code);
     }
 
-    // Passwords match, continue with form submission or other actions
-    console.log('Passwords match');
-    // Add your desired logic here
-
-    navigate('/home');
-  };
+    const selectCity = (e) => {
+        setCity(e.target.value);
+    }
 
     const handleEmail = (e) => {
         setEmail(e.target.value);
@@ -52,6 +51,13 @@ function Register() {
         setBirthdate(e.target.value);
     }
 
+    const handleFreelance = (e) => {
+        setChecked(!isChecked);
+    }
+
+    const handleSubmit = async (e) => {
+
+    }
 
     return (
         <div className="hero min-h-screen bg-base-200">
@@ -74,7 +80,7 @@ function Register() {
                                         Finished
                                     </li>
                                 </ul>
-                                <Step1 handleEmail={handleEmail} handlePassword={handlePassword} />
+                                <Step1 handleEmail={handleEmail} handlePassword={handlePassword} handleFreelance={handleFreelance} isChecked={isChecked} />
                                 <button onClick={() => setStep(step + 1)} className="btn btn-primary my-4">Next</button>
                             </div>
                         )) || 
@@ -94,7 +100,7 @@ function Register() {
                                         Finished
                                     </li>
                                 </ul>
-                                <Step2 province={province} provCode={provCode} city={city} selectProvince={selectProvince} selectCity={selectCity} />
+                                <Step2 province={province} provCode={provCode} city={city} isChecked={isChecked} selectProvince={selectProvince} selectCity={selectCity} />
                                 <button onClick={() => setStep(step - 1)} className="btn btn-primary float-left my-4">Back</button>
                                 <button onClick={() => setStep(step + 1)} className="btn btn-primary float-right my-4">Next</button>
                             </>
@@ -130,10 +136,10 @@ function Register() {
                 </div>
             </div>
         </div>
-    );
+    )
 }
 
-const Step1 = ({handleEmail, handlePassword}) => {
+const Step1 = ({handleEmail, handlePassword, handleFreelance, isChecked}) => {
     return (
         <div className="form-control content-center">
             <h1 className="text-5xl py-2 font-bold">Sign Up</h1>
@@ -149,11 +155,21 @@ const Step1 = ({handleEmail, handlePassword}) => {
             <input onChange={(e) => handlePassword(e)} type="password" placeholder="Password" class="input input-bordered w-full max-w-xs" />
             <div className="divider">OR</div>
             <GoogleButton style={{width: '100%'}} label="Sign Up with Google"/>
+            <div className="divider"></div>
+            <div className="input-group">
+                <span className="font-bold text-white input-bordered py-1">Do you want to be a Freelancer?</span>
+                <input
+                    type="checkbox"
+                    className="checkbox checkbox-primary py-4 px-4"
+                    checked={isChecked}
+                    onChange={handleFreelance}
+                />
+            </div>
         </div>
     );
 }
 
-const Step2 = ({province, provCode, city, selectProvince, selectCity}) => {
+const Step2 = ({province, provCode, city, isChecked, selectProvince, selectCity}) => {
     return (
         <div className="form-control">
             <h1 className="text-5xl py-2 font-bold">Sign Up</h1>
@@ -192,6 +208,14 @@ const Step2 = ({province, provCode, city, selectProvince, selectCity}) => {
                 <span class="label-text">Address</span>
             </label>
             <input type="text" placeholder="Address" class="input input-bordered w-full max-w-xs" />
+            {isChecked && (
+                <>
+                    <label class="label">
+                        <span class="label-text">Work Address</span>
+                    </label>
+                    <input type="text" placeholder="Work Address" class="input input-bordered w-full max-w-xs" />
+                </>
+            )}
             <label class="label">
                 <span class="label-text">ZIP Code</span>
             </label>
