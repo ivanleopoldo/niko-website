@@ -1,5 +1,14 @@
 import { createContext, useState, useContext, useEffect } from "react";
-import { signInWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth";
+
+import { 
+    signInWithEmailAndPassword, 
+    GoogleAuthProvider, 
+    onAuthStateChanged, 
+    signInWithPopup, 
+    signOut,
+    createUserWithEmailAndPassword
+} from "firebase/auth";
+
 import { auth } from "../config";
 
 // create context
@@ -25,6 +34,10 @@ export const AuthProvider = ({ children }) => {
         .catch((e)=>{
             console.log(e.message);
         });
+    }
+
+    const signUp = (username, first_name, last_name, email, password, location, birthdate, image) => {
+
     }
 
 

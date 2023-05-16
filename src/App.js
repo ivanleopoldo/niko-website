@@ -2,7 +2,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Freelance, Home, Login, Map, Register,Jobs,Profile, ProfileLance } from './pages';
 import { AuthProvider } from './context/AuthContext';
-import { PrivateRoute } from './routes/PrivateRoute';
+import { PrivateRoute } from './PrivateRoute';
 const App = ()=> {
   return (
       <AuthProvider>

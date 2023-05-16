@@ -5,7 +5,5 @@ import Register from "./Register";
 import Freelance from './Freelance';
 import Messages from './Messages';
 import Jobs from './Jobs';
-import Profile from './Profile';
-import ProfileLance from "./ProfileLance";
 
-export { Home, Login, Map, Register, Freelance, Messages, Jobs, Profile, ProfileLance };
+export { Home, Login, Map, Register, Freelance, Messages, Jobs };
