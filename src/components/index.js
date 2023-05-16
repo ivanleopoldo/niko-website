@@ -12,4 +12,6 @@ import Fcard from "./Fcard";
 import Range from "./Range";
 import Uprofile from "./Uprofile";
 import Updateprof from "./Updateprof";
-export { Card, Content, DrawerLeft, Footer, Modal, Navbar, Pagination, FreelancerRqt, MessageModal,Message,Fcard,Range,Uprofile,Updateprof};
+import Fprofile from "./Fprofile";
+import FupdateProf from "./FupdateProf";
+export { Card, Content, DrawerLeft, Footer, Modal, Navbar, Pagination, FreelancerRqt, MessageModal,Message,Fcard,Range,Uprofile,Updateprof,Fprofile,FupdateProf};
