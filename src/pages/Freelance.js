@@ -1,5 +1,5 @@
 import React from 'react'
-import { Freelancer_Rqt, Navbar,Footer,Pagination } from '../components'
+import { FreelancerRqt, Navbar,Footer,Pagination } from '../components'
 
 export function Freelance() {
   return (
@@ -9,13 +9,13 @@ export function Freelance() {
         <div>
           <hr></hr>
         <div className="flex flex justify-center items-center mt-3">
-        <Freelancer_Rqt/>
+        <FreelancerRqt/>
       </div>
         <div className='flex flex justify-center items-center mt-3'>
         <Pagination/>
       </div>
-
-        <div className="fixed bottom-0 w-full">
+          
+        <div >
             <Footer />
           </div>
       </div>
