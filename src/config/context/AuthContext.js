@@ -1,15 +1,15 @@
 import { createContext, useState, useContext, useEffect } from "react";
 
-import { 
-    signInWithEmailAndPassword, 
-    GoogleAuthProvider, 
-    onAuthStateChanged, 
-    signInWithPopup, 
+import {
+    signInWithEmailAndPassword,
+    GoogleAuthProvider,
+    onAuthStateChanged,
+    signInWithPopup,
     signOut,
-    createUserWithEmailAndPassword
+    createUserWithEmailAndPassword,
 } from "firebase/auth";
 
-import { auth } from "../config";
+import { auth, Firebase } from "..";
 
 // create context
 const AuthContext = createContext();
@@ -18,40 +18,42 @@ export const AuthProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
-
     // signin with google
     const signinWithGoogle = () => {
         const provider = new GoogleAuthProvider();
         signInWithPopup(auth, provider);
-    }
+    };
 
     // signin w/o google
     const signIn = (email, password) => {
         signInWithEmailAndPassword(auth, email, password)
-        .then((user) => {
-            
-        })
-        .catch((e)=>{
-            console.log(e.message);
+            .then((user) => {})
+            .catch((e) => {
+                console.log(e.message);
+            });
+    };
+
+    const signUp = (info) => {
+        createUserWithEmailAndPassword(
+            info.loginInfo.email,
+            info.loginInfo.password
+        ).then(() => {
+            // code
+            if (info.basicInfo.isFreelancer) {
+                Firebase.addData("users", info);
+            }
         });
-    }
-
-    const signUpUser = (firstName, lastName, email, password, province, city, address, birthdate, image) => {
-
-    }
-
-    const signUpFreelancer = (firstName, lastName, email, password, province, city, address, workAddress, resume, basePrice, birthdate, image) => {
-
-    }
+    };
 
     // signout
     const logout = () => signOut(auth);
+
     const value = {
         currentUser,
         signinWithGoogle,
         signIn,
-        logout
-    }
+        logout,
+    };
 
     // set currentUser
     useEffect(() => {
@@ -59,16 +61,16 @@ export const AuthProvider = ({ children }) => {
             setCurrentUser(user);
             setLoading(false);
         });
-    return unsubscribe;
+        return unsubscribe;
     }, []);
 
     return (
         <AuthContext.Provider value={value}>
             {!loading && children}
         </AuthContext.Provider>
-    )
-}
+    );
+};
 
 export const UserAuth = () => {
     return useContext(AuthContext);
-}
+};

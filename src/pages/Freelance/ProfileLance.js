@@ -1,22 +1,22 @@
-import React from 'react'
-import {Fprofile} from '../../components/Freelance'
-import { Footer,Navbar } from '../../components'
+import React from "react";
+import { Fprofile } from "../../components/Freelance";
+import { Footer, Navbar } from "../../components";
+
 export function ProfileLance() {
-  return (
-    <div>
+    return (
         <div>
-          <Navbar/>
+            <div>
+                <Navbar />
+            </div>
+            <div className="flex justify-center mr-32">
+                <Fprofile />
+            </div>
+
+            <div>
+                <Footer />
+            </div>
         </div>
-        <div className='flex justify-center mr-32'>
-           <Fprofile/>
-        </div>
-         
-        <div>
-         <Footer/>
-      </div>
-    </div>
-    
-  )
+    );
 }
 
-export default ProfileLance
+export default ProfileLance;
