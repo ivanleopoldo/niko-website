@@ -1,10 +1,10 @@
 import React from 'react'
-import { FupdateProf} from '.'
+import { FupdateProf} from '../../components/Freelance/FupdateProf'
 
 export function Fprofile() {
   return (
     <div className="card w-96 bg-base-100 shadow-xl">
-    <figure><img src={require('../images/her78.PNG')} alt="UserProfile" /></figure>
+    <figure><img src={require('../../images/her78.png')} alt="UserProfile" /></figure>
     <div className="card-body">
         <h2 className="card-title">
         Xio Bao Mao
@@ -31,7 +31,7 @@ export function Fprofile() {
                     <label htmlFor="my-modal-4" className="modal cursor-pointer">
                     <label className="modal-box relative" htmlFor="">
                         <div>
-                            <img src={require("../images/MockCertif.png")} />
+                            <img src={require("../../images/MockCertif.png")} />
                         </div>
                     </label>
                     </label>

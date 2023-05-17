@@ -1,7 +1,7 @@
-import { IconName } from '@heroicons/react/24/outline';
 import { UserAuth } from "../context/AuthContext";
 import { useNavigate,useLocation,navigate,Link} from "react-router-dom";
-import { Profile,ProfileLance } from '../pages';
+// import { Profile,Message} from '../pages';
+// import {Freelance} from '../pages/Freelance/Freelance'
 function Navbar({image, name }) {
 
   const location = useLocation();
@@ -19,21 +19,21 @@ function Navbar({image, name }) {
     }
   }
   
-  const handleProf = async (e) =>{
-      navigate('Profile');
+//   const handleProf = async (e) =>{
+//       navigate('Profile');
       
-  }
+//   }
 
-  const handleFProf = async (e) =>{
-    navigate('ProfileLance');
+//   const handleFProf = async (e) =>{
+//     navigate('ProfileLance');
     
-}
+// }
 
   return (
     <nav className='nav'>
       <div class="navbar bg-base-100">
         <div class="flex-1">
-          <a style={{ fontSize: '50px' }}>TekNiko</a>
+          <p style={{ fontSize: '50px' }}>TekNiko</p>
         </div>
         {/* <div class="flex-1">
           <input type="text" placeholder="Search" class="input-bordered input w-full max-w-xs center" />
@@ -51,7 +51,11 @@ function Navbar({image, name }) {
             </div>
           </label>
           <ul tabindex="0" class="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-42">
-            <li><a>Messages</a></li>
+            <li>
+              <Link link to={"/Message"}>
+               Messages
+              </Link>
+            </li>
             <li><a>Calendar</a></li>
           </ul>
         </div>
@@ -67,13 +71,13 @@ function Navbar({image, name }) {
             <ul tabindex="0" class="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
               <span class="ml-10">{name}</span>
               <li>
-                <Link class="justify-between" onClick={handleProf} > 
+                <Link class="justify-between" Link to={"/Profile"} > 
                   Profile
                   <span class="badge">New</span>
                 </Link>
               </li>
               <li>
-                <Link class="justify-between" onClick={handleFProf} > 
+                <Link class="justify-between" Link to={"/ProfileLance"} > 
                   Freelance Profile
                   <span class="badge">New</span>
                 </Link>

@@ -4,7 +4,7 @@ import { Updateprof } from '.'
 export function Uprofile() {
   return (
     <div className="card w-96 bg-base-100 shadow-xl">
-        <figure><img src={require('../images/her78.PNG')} alt="UserProfile" /></figure>
+        <figure><img src={require('../images/her78.png')} alt="UserProfile" /></figure>
         <div className="card-body">
             <h2 className="card-title">
             Xio Bao Mao

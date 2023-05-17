@@ -1,8 +1,8 @@
-import React from 'react';
+import React from 'react'
 
-function Messages() {
+export function Messagepop() {
   return (
-    <div>
+    <div className='mt-10'>
         <div className="chat chat-start ">
           <div className="chat-image avatar avatar online">
             <div className="w-10 rounded-full">
@@ -33,14 +33,12 @@ function Messages() {
             Seen at 12:46
           </div>
         </div>
-        <div className='mt-2.5'>
-        <input type="text" placeholder="Reply...." className="input input-bordered w-full max-w-xs" /> 
+        <div className=' flex justify-center mt-[330px] '>
+        <input type="text" placeholder="Reply...." className="input input-bordered w-full max-w-xl" /> 
         <button className="btn btn-success ml-2.5 divide-x">Send</button>
         </div>
     </div>
-
-
-  );
+  )
 }
 
-export default Messages;
+export default Messagepop

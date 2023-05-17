@@ -1,6 +1,6 @@
 import React from 'react'
-import { Footer, Fprofile, Navbar } from '../components'
-
+import {Fprofile} from '../../components/Freelance'
+import { Footer,Navbar } from '../../components'
 export function ProfileLance() {
   return (
     <div>

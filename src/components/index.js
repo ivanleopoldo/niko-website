@@ -5,13 +5,18 @@ import Footer from "./Footer";
 import Modal from "./Modal";
 import Navbar from "./Navbar";
 import Pagination from "./Pagination";
-import FreelancerRqt from "./FreelancerRqt";
+import Range from "./Range";
 import MessageModal from "./MessageModal";
 import Message from "./Messages";
-import Fcard from "./Fcard";
-import Range from "./Range";
+import MessageProp from "./MessageProp";
+import MessageCard2 from "./MessageCard2";
+import Certificate from "./Certificate";
+// import FreelancerRqt from "./Freelance/FreelancerRqt";
+// import Fcard from "./Freelance/Fcard";
+// import Fprofile from "../components/Freelance/Fprofile";
+// import FupdateProf from "../components/Freelance/FupdateProf";
+
 import Uprofile from "./Uprofile";
 import Updateprof from "./Updateprof";
-import Fprofile from "./Fprofile";
-import FupdateProf from "./FupdateProf";
-export { Card, Content, DrawerLeft, Footer, Modal, Navbar, Pagination, FreelancerRqt, MessageModal,Message,Fcard,Range,Uprofile,Updateprof,Fprofile,FupdateProf};
+
+export { Card, Content, DrawerLeft, Footer, Modal, Navbar, Pagination, MessageModal,Message,Range,Uprofile,Updateprof,MessageProp,MessageCard2, Certificate};

@@ -1,5 +1,6 @@
 import React from 'react'
-import { FreelancerRqt, Navbar,Footer,Pagination } from '../components'
+import { Navbar,Footer,Pagination } from '../../components'
+import {FreelancerRqt} from '../../components/Freelance'
 
 export function Freelance() {
   return (
