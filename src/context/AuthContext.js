@@ -36,10 +36,13 @@ export const AuthProvider = ({ children }) => {
         });
     }
 
-    const signUp = (username, first_name, last_name, email, password, location, birthdate, image) => {
+    const signUpUser = (firstName, lastName, email, password, province, city, address, birthdate, image) => {
 
     }
 
+    const signUpFreelancer = (firstName, lastName, email, password, province, city, address, workAddress, resume, basePrice, birthdate, image) => {
+
+    }
 
     // signout
     const logout = () => signOut(auth);

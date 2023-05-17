@@ -24,7 +24,7 @@ class FirebaseConnection{
     fetchAllData(collection_name){
         return collection(db, collection_name);
     }
-    addData(){
+    addData(...args){
         
     }
 }

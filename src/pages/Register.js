@@ -1,380 +1,422 @@
 import React, { useState } from 'react';
-import { provinces, getCityMunByProvince } from '../constants';
 import GoogleButton from 'react-google-button';
+
+import { provinces, getCityMunByProvince } from '../constants';
 import { Range } from '../components';
 
+import RegisterHandler from '../handlers/RegisterHandler';
+import ValidationHandler from '../handlers/ValidationHandler';
+
 function Register(){
-    const [isChecked, setChecked] = useState(false);
+    const [info, setInfo] = useState({
+        loginInfo:{
+            email: null,
+            password: null,
+        },
+        basicInfo: {
+            firstName: null,
+            lastName: null,
+            phoneNumber: null,
+            birthdate: null,
+            bio: null,
+            profImage: null,
+            isFreelancer: false,
+        },
+        locationInfo: {
+            provName: null,
+            provCode: null,
+            city: null,
+            address: null,
+            workAddress: null,
+            zipCode: null,
+        },
+        freelanceInfo: {
+            certificateImage: null,
+            basePrice: 1500
+        } 
+    });
 
-    const [province, setProvince] = useState("");
-    const [provCode, setProvCode] = useState("");
-    const [city, setCity] = useState("");
     const [step, setStep] = useState(1);
+    const [errors, setErrors] = useState({});
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [bio, setBio] = useState("");
-    const [birthdate, setBirthdate] = useState(null);
-    const [image, setImage] = useState(null);
-    const [resume, setResume] = useState(null);
-    const [address, setAddress] = useState("");
-    const [workAddress, setWorkAddress] = useState("");
-    const [zipCode, setZipCode] = useState(0);
-    const [basePrice, setBasePrice] = useState(0);
-
-    const selectProvince = (e) => {
-        const selected = provinces.find((entry) => entry.name === e.target.value);
-        setProvince(selected.name);
-        setProvCode(selected.prov_code);
+    const callback = (data) => {
+        setInfo({
+            ...info,
+            ...data
+        })
     }
 
-    const selectCity = (e) => {
-        setCity(e.target.value);
+    const setErrorState = (name, err_msg="") => {
+        setErrors({
+            ...errors,
+            [name]: err_msg
+        });
+    }
+    
+    const handler = new RegisterHandler(callback, info);
+    const validation = new ValidationHandler(handler, setErrorState, provinces);
+
+    const nextStep = () =>  {
+        setStep(step + 1);
     }
 
-    const handleEmail = (e) => {
-        setEmail(e.target.value);
+    const prevStep = () => {
+        setStep(step - 1);
     }
 
-    const handlePassword = (e) => {
-        setPassword(e.target.value);
+
+    const isAnError = (key) => {
+        const bool = errors[key] === "";
+        return bool;
     }
 
-    const handleFirstName = (e) => {
-        setFirstName(e.target.value);
-    }
+    const handleChange = (event) => {
+        event.preventDefault();
 
-    const handleLastName = (e) => {
-        setLastName(e.target.value);
-    }
+        let name = event.target.name;
+        let val = event.target.value;
 
-    const handleBio = (e) => {
-        setBio(e.target.value);
-    }
-
-    const handleImage = (e) => {
-        setImage(e.target.value);
-    }
-
-    const handleBirthdate = (e) => {
-        setBirthdate(e.target.value);
-    }
-
-    const handleAddress = (e) => {
-        setAddress(e.target.value);
-    }
-
-    const handleWorkAddress = (e) => {
-        setWorkAddress(e.target.value);
-    }
-
-    const handleZipCode = (e) => {
-        setZipCode(e.target.value);
-    }
-
-    const handleFreelance = (e) => {
-        setChecked(!isChecked);
-    }
-
-    const handleBasePrice = (e) => {
-        setBasePrice(parseInt(e.target.value));
-    }
-
-    const handleResume = (e) => {
-        setResume(e.target.value);
+        validation.validate(event, name, val);
     }
 
     const handleSubmit = async (e) => {
 
     }
 
-    return (
-        <div className="hero min-h-screen bg-base-200">
-            <div className='hero-content'>
-                <div className="w-full max-w-xs">
-                    {
-                        (step === 1 && (
-                            <div className="form-control">
-                                <ul className="steps">
-                                    <li className="step step-primary">
-                                        Basic Info
-                                    </li>
-                                    <li className="step">
-                                        Location
-                                    </li>
-                                    <li className="step">
-                                        Personal Info
-                                    </li>
-                                    <li className="step">
-                                        Finished
-                                    </li>
-                                </ul>
-                                <Step1 
-                                    handleEmail={handleEmail} 
-                                    handlePassword={handlePassword} 
-                                    handleFreelance={handleFreelance} 
-                                    isChecked={isChecked} 
-                                />
-                                <button onClick={() => setStep(step + 1)} className="btn btn-primary my-4">Next</button>
-                            </div>
-                        )) || 
-                        (step === 2 && (
-                            <>
-                                <ul className="steps">
-                                    <li className="step step-primary">
-                                        Basic Info
-                                    </li>
-                                    <li className="step step-primary">
-                                        Location
-                                    </li>
-                                    <li className="step">
-                                        Personal Info
-                                    </li>
-                                    <li className="step">
-                                        Finished
-                                    </li>
-                                </ul>
-                                <Step2 
-                                    province={province} 
-                                    provCode={provCode} 
-                                    city={city} 
-                                    isChecked={isChecked} 
-                                    selectProvince={selectProvince} 
-                                    selectCity={selectCity} 
-                                    handleAddress={handleAddress}
-                                    handleWorkAddress={handleWorkAddress}
-                                    handleZipCode={handleZipCode}
-                                />
-                                <button onClick={() => setStep(step - 1)} className="btn btn-primary float-left my-4">Back</button>
-                                <button onClick={() => setStep(step + 1)} className="btn btn-primary float-right my-4">Next</button>
-                            </>
-                        )) ||
-                        (step === 3 && (
-                            <>
-                                <ul className="steps">
-                                    <li className="step step-primary">
-                                        Basic Info
-                                    </li>
-                                    <li className="step step-primary">
-                                        Location
-                                    </li>
-                                    <li className="step step-primary">
-                                        Personal Info
-                                    </li>
-                                    <li className="step">
-                                        Finished
-                                    </li>
-                                </ul>
-                                <Step3 
-                                    handleFirstName={handleFirstName}
-                                    handleLastName={handleLastName}
-                                    handleBio={handleBio} 
-                                    handleBirthdate={handleBirthdate} 
-                                    handleImage={handleImage} 
-                                    handleResume={handleResume}
-                                    handleBasePrice={handleBasePrice}
-                                    isChecked={isChecked}
-                                />
-                                <button onClick={() => setStep(step - 1)} className="btn btn-primary float-left my-4">Back</button>
-                                <button onClick={() => setStep(step + 1)} className="btn btn-primary float-right my-4">Next</button>
-                            </>
-                        )) ||
-                        (step === 4 && (
-                            <div className="form-control">
-                                <Step4 
-                                    email={email}
-                                    password={password}
-                                    isChecked={isChecked}
-                                    bio={bio}
-                                    birthdate={birthdate}
-                                    image={image}
-                                    resume={resume}
-                                    basePrice={basePrice}
-                                    firstName={firstName}
-                                    lastName={lastName}
-                                    address={address}
-                                    workAddress={workAddress}
-                                    zipCode={zipCode}
-                                />
-                                <button onClick={() => setStep(step - 1)} className="btn btn-primary float-left my-4">Back</button>
-                                <button onClick={handleSubmit} className="btn btn-success float-right my-4">Submit</button>
-                            </div>
-                        ))
-                    }
-                </div>
-            </div>
-        </div>
-    )
-}
-
-const Step1 = ({handleEmail, handlePassword, handleFreelance, isChecked}) => {
-    return (
-        <div className="form-control content-center">
-            <h1 className="text-5xl py-2 font-bold">Sign Up</h1>
-            {/* Email */}
-            <label className="label">
-                <span className="label-text">Email</span>
-            </label>
-            <input onChange={(e) => handleEmail(e)} type="email" placeholder="Email" className="input input-bordered w-full max-w-xs" />
-            {/* Password */}
-            <label className="label">
-                <span className="label-text">Password</span>
-            </label>
-            <input onChange={(e) => handlePassword(e)} type="password" placeholder="Password" className="input input-bordered w-full max-w-xs" />
-            <div className="divider">OR</div>
-            <GoogleButton style={{width: '100%'}} label="Sign Up with Google"/>
-            <div className="divider"></div>
-            <div className="input-group">
-                <span className="font-bold text-white input-bordered py-1">Do you want to be a Freelancer?</span>
-                <input
-                    type="checkbox"
-                    className="checkbox checkbox-primary py-4 px-4"
-                    checked={isChecked}
-                    onChange={handleFreelance}
-                />
-            </div>
-        </div>
-    );
-}
-
-const Step2 = ({province, provCode, city, isChecked, selectProvince, selectCity, handleAddress, handleWorkAddress, handleZipCode}) => {
-    return (
-        <div className="form-control">
-            <h1 className="text-5xl py-2 font-bold">Sign Up</h1>
-            {/* Location */}
-            <label className="label">
-                <span className="label-text">Province</span>
-            </label>
-            <select onChange={(e) => selectProvince(e)} className="select select-bordered w-full max-w-xs">
-                <option value={null} disabled selected>Select</option>
-                {provinces.map(({prov_code, name}) => {
-                    return (
-                        <option key={prov_code} value={name}>
-                            {name}
-                        </option>
-                    );
-                })}
-            </select>
-            {!!province && (
-                    <>
+    const formSteps = () => {
+        switch (step) {
+            case 1:{
+                return (
+                    <div className="form-control content-center">
+                        <h1 className="text-5xl py-2 font-bold">Sign Up</h1>
+                        {/* Email */}
                         <label className="label">
-                            <span className="label-text">City</span>
+                            <span className="label-text">Email</span>
                         </label>
-                        <select onChange={(e) => selectCity(e)} className="select select-bordered w-full max-w-xs">
+                        <input 
+                            name="email"
+                            onChange={handleChange} 
+                            value={info.loginInfo.email === null ? "" : info.loginInfo.email} 
+                            type="email" 
+                            placeholder="Email" 
+                            className={"input input-bordered w-full max-w-xs " + (errors.email && ("border-rose-500"))}  
+                            required
+                        />
+                        {errors.email && (
+                            <span className="label-text text-rose-500">{errors.email}</span>
+                        )}
+                        {/* Password */}
+                        <label className="label">
+                            <span className="label-text">Password</span>
+                        </label>
+                        <input 
+                            name="password"
+                            onChange={handleChange} 
+                            value={info.loginInfo.password === null ? "" : info.loginInfo.password} 
+                            type="password" 
+                            placeholder="Password" 
+                            className="input input-bordered w-full max-w-xs" 
+                            required
+                        />
+                        {errors.password && (
+                            <span className="label-text text-rose-500">{errors.password}</span>
+                        )}
+                        <div className="divider">OR</div>
+                        <GoogleButton style={{width: '100%'}} label="Sign Up with Google"/>
+                        <div className="divider"></div>
+                        <div className="input-group">
+                            <span className="font-bold input-bordered py-1">Do you want to be a Freelancer?</span>
+                            <input
+                                onChange={(e) => handler.BasicInfoHandler().handleIsFreelance(e)}
+                                type="checkbox"
+                                className="checkbox checkbox-primary py-4 px-4"
+                                checked={info.basicInfo.isFreelancer}
+                            />
+                        </div>
+                        <button disabled={!(isAnError('email') && isAnError('password'))} onClick={nextStep} className="btn btn-primary my-4">Next</button>
+                    </div>
+                );
+            }
+            case 2: {
+                return (
+                    <div>
+                        <h1 className="text-5xl py-2 font-bold">Sign Up</h1>
+                        {/* Location */}
+                        <label className="label">
+                            <span className="label-text">Province</span>
+                        </label>
+                        <select 
+                            name="province"
+                            onChange={handleChange} 
+                            className="select select-bordered w-full max-w-xs"
+                            required
+                        >
                             <option value={null} disabled selected>Select</option>
-                            {getCityMunByProvince(provCode).map(({name, prov_code, mun_code}) => {
+                            {provinces.map(({prov_code, name}) => {
                                 return (
-                                    <option value={city} key={name}>
+                                    <option key={prov_code} value={name} selected={info.locationInfo.provName === name ? true : false}>
                                         {name}
                                     </option>
                                 );
                             })}
                         </select>
-                    </>
-            )}
-            <label className="label">
-                <span className="label-text">Address</span>
-            </label>
-            <input onChange={(e) => handleAddress(e)} type="text" placeholder="Address" className="input input-bordered w-full max-w-xs" />
-            {isChecked && (
-                <>
-                    <label className="label">
-                        <span className="label-text">Work Address</span>
-                    </label>
-                    <input onChange={(e) => handleWorkAddress(e)} type="text" placeholder="Work Address" className="input input-bordered w-full max-w-xs" />
-                </>
-            )}
-            <label className="label">
-                <span className="label-text">ZIP Code</span>
-            </label>
-            <input onChange={(e) => handleZipCode(e)} type="number" placeholder="Zip Code" className="input input-bordered w-full max-w-xs" />
-        </div>
-    );
-}
+                        {errors.province && (
+                            <span className="label-text text-rose-500">{errors.province}</span>
+                        )}
+                        {!!info.locationInfo.provName && (
+                                <>
+                                    <label className="label">
+                                        <span className="label-text">City</span>
+                                    </label>
+                                    <select 
+                                        name="city"
+                                        onChange={handleChange} 
+                                        className="select select-bordered w-full max-w-xs"
+                                        required
+                                    >
+                                        <option value={null} disabled selected>Select</option>
+                                        {getCityMunByProvince(info.locationInfo.provCode).map(({name, prov_code, mun_code}) => {
+                                            return (
+                                                <option value={info.locationInfo.city} key={name} selected={info.locationInfo.city === name ? true : false}>
+                                                    {name}
+                                                </option>
+                                            );
+                                        })}
+                                    </select>
+                                    {errors.city && (
+                                        <span className="label-text text-rose-500">{errors.city}</span>
+                                    )}
+                                </>
+                        )}
+                        <label className="label">
+                            <span className="label-text">Address</span>
+                        </label>
+                        <input 
+                            name="address"
+                            onChange={handleChange} 
+                            value={info.locationInfo.address === null ? "" : info.locationInfo.address} 
+                            type="text" 
+                            placeholder="Address" 
+                            className="input input-bordered w-full max-w-xs" 
+                            required
+                        />
+                        {errors.address && (
+                            <span className="label-text text-rose-500">{errors.address}</span>
+                        )}
+                        {info.basicInfo.isFreelancer && (
+                            <>
+                                <label className="label">
+                                    <span className="label-text">Work Address</span>
+                                    <span className="label-text-alt">Optional</span>
+                                </label>
+                                <input 
+                                    onChange={(e) => handler.LocationInfoHandler().handleWorkAddress(e)} 
+                                    value={info.locationInfo.workAddress === null ? "" : info.locationInfo.workAddress} 
+                                    type="text" 
+                                    placeholder="Work Address" 
+                                    className="input input-bordered w-full max-w-xs" 
+                                    required
+                                />
+                            </>
+                        )}
+                        <label className="label">
+                            <span className="label-text">ZIP Code</span>
+                        </label>
+                        <input 
+                            name="zipCode"
+                            onChange={handleChange} 
+                            value={info.locationInfo.zipCode === null ? "" : info.locationInfo.zipCode} 
+                            maxLength={4} 
+                            type="number" 
+                            placeholder="Zip Code" 
+                            className="input input-bordered w-full max-w-xs" 
+                            required
+                        />
+                        {errors.zipCode && (
+                            <span className="label-text text-rose-500">{errors.zipCode}</span>
+                        )}
+                        <button onClick={prevStep} className="btn btn-primary float-left my-4">Back</button>
+                        <button disabled={!(isAnError('address') && isAnError('zipCode'))} onClick={nextStep} className="btn btn-primary float-right my-4">Next</button>
+                    </div>
+                );
+            }
+            case 3: {
+                return (
+                    <div>
+                        <h1 className="text-5xl py-2 font-bold">Sign Up</h1>
+                        <label className="label">
+                            <span className="label-text">First Name</span>
+                        </label>
+                        <input 
+                            name="firstName"
+                            onChange={handleChange} 
+                            value={info.basicInfo.firstName === null ? "" : info.basicInfo.firstName} 
+                            type="text" 
+                            placeholder="Last Name" 
+                            className="input input-bordered w-full max-w-xs" 
+                            required
+                        />
+                        {errors.firstName && (
+                            <span className="label-text text-rose-500">{errors.firstName}</span>
+                        )}
+                        <label className="label">
+                            <span className="label-text">Last Name</span>
+                        </label>
+                        <input 
+                            name="lastName"
+                            onChange={handleChange} 
+                            value={info.basicInfo.lastName === null ? "" : info.basicInfo.lastName} 
+                            type="text" 
+                            placeholder="Last Name" 
+                            className="input input-bordered w-full max-w-xs" 
+                            required
+                        />
+                        {errors.lastName && (
+                            <span className="label-text text-rose-500">{errors.lastName}</span>
+                        )}
+                        <label className="label">
+                            <span className="label-text">Phone Number</span>
+                        </label>
+                        <label className="input-group">
+                            <span>+63</span>
+                            <input 
+                                name="phoneNumber"
+                                onChange={handleChange} 
+                                value={info.basicInfo.phoneNumber === null ? "" : info.basicInfo.phoneNumber} 
+                                type="tel" 
+                                placeholder="Phone Number" 
+                                className="input input-bordered w-full max-w-xs" 
+                                required
+                            />
+                        </label>
+                        {errors.phoneNumber && (
+                            <span className="label-text text-rose-500">{errors.phoneNumber}</span>
+                        )}
+                        <label className="label">
+                            <span className="label-text">Profile Image</span>
+                            <span className="label-text-alt">Optional</span>
+                        </label>
+                        <input 
+                            name="profImage"
+                            accept=".jpg, .png, .jpeg, .PNG, .JPEG, .JPG"
+                            onChange={(e) => handler.BasicInfoHandler().handleProfImage(e)} 
+                            value={info.basicInfo.profImage === null ? "" : info.basicInfo.profImage} 
+                            type="file" 
+                            className="file-input file-input-bordered w-full max-w-xs" 
+                            required
+                        />
+                        <label className="label">
+                            <span className="label-text">Biography</span>
+                            <span className="label-text-alt">Optional</span>
+                        </label>
+                        <textarea 
+                            name="bio"
+                            onChange={(e) => handler.BasicInfoHandler().handleBio(e)} 
+                            value={info.basicInfo.bio === null ? "" : info.basicInfo.bio} 
+                            placeholder='Tell us about yourself!' 
+                            className="textarea textarea-bordered w-full max-w-xs" 
+                        />
+                        {errors.bio && (
+                            <span className="label-text text-rose-500">{errors.bio}</span>
+                        )}
+                        {info.basicInfo.isFreelancer && (
+                            <>
+                                <Range
+                                    name="basePrice"
+                                    value={info.freelanceInfo.basePrice}
+                                    onChange={(e)=>handler.FreelancerInfoHandler().handleBasePrice(e)}
+                                />
+                                <label className="label">
+                                    <span className="label-text">Certificate</span>
+                                    <span className="label-text-alt">Optional</span>
+                                </label>
+                                <input 
+                                    accept=".jpg, .png, .jpeg, .PNG, .JPEG, .JPG"
+                                    onChange={(e) => handler.FreelancerInfoHandler().handleCertificateImage(e)} 
+                                    value={info.freelanceInfo.certificateImage === null ? "" : info.freelanceInfo.certificateImage} 
+                                    type="file" 
+                                    className="file-input file-input-bordered w-full max-w-xs" 
+                                    required
+                                />
+                            </>
+                        )}
+                        <button onClick={prevStep} className="btn btn-primary float-left my-4">Back</button>
+                        <button disabled={!(isAnError('firstName') && isAnError('lastName') && isAnError('phoneNumber'))} onClick={nextStep} type="submit" className="btn btn-primary float-right my-4">Next</button>
+                    </div>
+                );
+            }
+            case 4:{
+                return (
+                    <div>
+                        <label className="label">
+                            <span className="label-text">{info.loginInfo.email}</span>
+                        </label>
+                        <label className="label">
+                            <span className="label-text">{info.loginInfo.password}</span>
+                        </label>
+                        <label className="label">
+                            <span className="label-text">{info.basicInfo.profImage}</span>
+                        </label>
+                        <label className="label">
+                            <span className="label-text">{info.basicInfo.firstName}</span>
+                        </label>
+                        <label className="label">
+                            <span className="label-text">{info.basicInfo.lastName}</span>
+                        </label>
+                        <label className="label">
+                            <span className="label-text">{info.basicInfo.birthdate}</span>
+                        </label>
+                        <label className="label">
+                            <span className="label-text">{info.basicInfo.bio}</span>
+                        </label>
+                        <label className="label">
+                            <span className="label-text">{info.locationInfo.address}</span>
+                        </label>
+                        <label className="label">
+                            <span className="label-text">{info.locationInfo.workAddress}</span>
+                        </label>
+                        <label className="label">
+                            <span className="label-text">{info.locationInfo.zipCode}</span>
+                        </label>
+                        <label className="label">
+                            <span className="label-text">{info.freelanceInfo.certificateImage}</span>
+                        </label>
+                        <label className="label">
+                            <span className="label-text">{info.freelanceInfo.basePrice}</span>
+                        </label>
+                        <button onClick={prevStep} className="btn btn-primary float-left my-4">Back</button>
+                        <button onClick={handleSubmit} className="btn btn-success float-right my-4">Submit</button>
+                    </div>
+                );
+            }
+            default:
+                break;
+        }
+    }
 
-const Step3 = ({handleFirstName, handleLastName, handleBasePrice, handleResume, handleBio, handleBirthdate, handleImage, isChecked, basePrice}) =>{
     return (
-        <div className="form-control">
-            <h1 className="text-5xl py-2 font-bold">Sign Up</h1>
-            <label className="label">
-                <span className="label-text">First Name</span>
-            </label>
-            <input onChange={(e) => handleFirstName(e)} type="text" placeholder="Last Name" className="input input-bordered w-full max-w-xs" />
-            <label className="label">
-                <span className="label-text">Last Name</span>
-            </label>
-            <input onChange={(e) => handleLastName(e)} type="text" placeholder="Last Name" className="input input-bordered w-full max-w-xs" />
-            <label className="label">
-                <span className="label-text">Birthdate</span>
-            </label>
-            <input onChange={(e) => handleBirthdate(e)} type="date" placeholder="Birthday" className="input input-bordered w-full max-w-xs" />
-            <label className="label">
-                <span className="label-text">Profile Picture</span>
-            </label>
-            <input type="file" onChange={(e) => handleImage(e)} className="file-input file-input-bordered w-full max-w-xs" />
-            <label className="label">
-                <span className="label-text">Biography</span>
-            </label>
-            <textarea onChange={(e) => handleBio(e)} placeholder='Tell us about yourself!' className="textarea textarea-bordered w-full max-w-xs" />
-            {isChecked && (
-                <>
-                    <label className="label">
-                        <span className="label-text">Base Price in (₱)</span>
-                    </label>
-                    <Range value={basePrice} onChange={handleBasePrice} />
-                    <label className="label">
-                        <span className="label-text">Resume</span>
-                    </label>
-                    <input type="file" onChange={(e) => handleResume(e)} className="file-input file-input-bordered w-full max-w-xs" />
-                </>
-            )}
+        <div className="hero min-h-screen bg-base-200">
+            <div className='hero-content'>
+                <div className="w-full max-w-xs">
+                    <ul className="steps">
+                        <li className="step step-primary">
+                            Basic Info
+                        </li>
+                        <li className={"step " + (step > 1 ? "step-primary" : "")}>
+                            Location
+                        </li>
+                        <li className={"step " + (step > 2 ? "step-primary" : "")}>
+                            Personal Info
+                        </li>
+                        <li className={"step " + (step > 3 ? "step-primary" : "")}>
+                            Finished
+                        </li>
+                    </ul>
+                    {formSteps()}
+                </div>
+            </div>
         </div>
-    );
-}
-
-const Step4 = ({email, password, isChecked, resume, image, firstName, lastName, birthdate, address, workAddress, basePrice, zipCode, bio}) => {
-    return (
-        <div>
-            <label className="label">
-                <span className="label-text">{email}</span>
-            </label>
-            <label className="label">
-                <span className="label-text">{password}</span>
-            </label>
-            <label className="label">
-                <span className="label-text">{image}</span>
-            </label>
-            <label className="label">
-                <span className="label-text">{firstName}</span>
-            </label>
-            <label className="label">
-                <span className="label-text">{lastName}</span>
-            </label>
-            <label className="label">
-                <span className="label-text">{birthdate}</span>
-            </label>
-            <label className="label">
-                <span className="label-text">{address}</span>
-            </label>
-            <label className="label">
-                <span className="label-text">{bio}</span>
-            </label>
-            <label className="label">
-                <span className="label-text">{resume}</span>
-            </label>
-            <label className="label">
-                <span className="label-text">{zipCode}</span>
-            </label>
-            <label className="label">
-                <span className="label-text">{workAddress}</span>
-            </label>
-            <label className="label">
-                <span className="label-text">{basePrice}</span>
-            </label>
-        </div>
-    );
+    )
 }
 
 export default Register;
