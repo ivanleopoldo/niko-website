@@ -14,7 +14,7 @@ export function MessageCard() {
       </thead>
       <tbody>
         {/* row 1 */}
-        <tr>
+        <tr className='hover'>
           <td>
           <ul>
             <div>
@@ -40,7 +40,7 @@ export function MessageCard() {
           </td>
         </tr>
         {/* start row 2 */}
-        <tr>
+        <tr className='hover'>
           <td>
           <ul>
             <a>
