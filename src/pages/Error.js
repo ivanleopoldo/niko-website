@@ -1,10 +1,10 @@
-import React from 'react'
-import { Navbar } from '../components';
+import React from "react";
+import { Navbar } from "../components";
 
 function Error() {
   return (
     <div>
-      <Navbar/>
+      <p>Error</p>
     </div>
   );
 }

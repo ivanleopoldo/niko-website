@@ -7,7 +7,7 @@ import Navbar from "./Navbar";
 import Pagination from "./Pagination";
 import Range from "./Range";
 import MessageModal from "./MessageModal";
-import Message from "./Messages";
+import Messages from "./Messages";
 import MessageProp from "./MessageProp";
 import MessageCard2 from "./MessageCard2";
 import Certificate from "./Certificate";
@@ -19,4 +19,20 @@ import Certificate from "./Certificate";
 import Uprofile from "./Uprofile";
 import Updateprof from "./Updateprof";
 
-export { Card, Content, DrawerLeft, Footer, Modal, Navbar, Pagination, MessageModal,Message,Range,Uprofile,Updateprof,MessageProp,MessageCard2, Certificate};
+export {
+  Card,
+  Content,
+  DrawerLeft,
+  Footer,
+  Modal,
+  Navbar,
+  Pagination,
+  MessageModal,
+  Messages,
+  Range,
+  Uprofile,
+  Updateprof,
+  MessageProp,
+  MessageCard2,
+  Certificate,
+};

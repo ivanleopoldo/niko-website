@@ -8,18 +8,16 @@ import Profile from "./Profile";
 import Jobs from "./Jobs";
 import Message from "./Message";
 import Error from "./Error";
-import Messages from "./Messages";
 
 export {
-    Home,
-    Login,
-    Map,
-    Register,
-    ProfileLance,
-    Profile,
-    Freelance,
-    Message,
-    Jobs,
-    Messages,
-    Error,
+  Home,
+  Login,
+  Map,
+  Register,
+  ProfileLance,
+  Profile,
+  Freelance,
+  Message,
+  Jobs,
+  Error,
 };
