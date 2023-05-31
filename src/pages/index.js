@@ -8,7 +8,7 @@ import Profile from "./Profile";
 import Jobs from "./Jobs";
 import Message from "./Message";
 import Error from "./Error";
-
+import Calendar from "./Calendar";
 export {
   Home,
   Login,
@@ -20,4 +20,5 @@ export {
   Message,
   Jobs,
   Error,
+  Calendar,
 };

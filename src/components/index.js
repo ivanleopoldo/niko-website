@@ -18,7 +18,7 @@ import Certificate from "./Certificate";
 
 import Uprofile from "./Uprofile";
 import Updateprof from "./Updateprof";
-
+import CalendarProp from "./CalendarProp";
 export {
   Card,
   Content,
@@ -35,4 +35,5 @@ export {
   MessageProp,
   MessageCard2,
   Certificate,
+  CalendarProp,
 };

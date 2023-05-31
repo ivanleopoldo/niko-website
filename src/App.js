@@ -10,6 +10,7 @@ import {
   ProfileLance,
   Message,
   Error,
+  Calendar,
 } from "./pages";
 import { AuthProvider } from "./config/context/";
 import { PrivateRoute } from "./PrivateRoute";
@@ -33,6 +34,7 @@ const App = () => {
         <Route path="/profile" element={<Profile />} />
         <Route path="/profileLance" element={<ProfileLance />} />
         <Route path="/Message" element={<Message />} />
+        <Route path="/Calendar" element={<Calendar/>} />
         <Route path="*" element={<Error />} />
       </Routes>
     </AuthProvider>

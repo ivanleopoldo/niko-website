@@ -51,10 +51,10 @@ function Navbar() {
                         class="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-42"
                     >
                         <li>
-                            <Link>Messages</Link>
+                            <Link to={"/Message"}>Messages</Link>
                         </li>
                         <li>
-                            <Link>Calendar</Link>
+                            <Link to={"/Calendar"}>Calendar</Link>
                         </li>
                     </ul>
                 </div>
