@@ -76,8 +76,8 @@ function CalendarProp() {
 //   const [selectedEvent, setSelectedEvent] = useState(null);
   
 //   function handleEventClick(clickedEvent) {
-//   setSelectedEvent(clickedEvent);
-//   setShowModal(true);
+//   // setSelectedEvent(clickedEvent);
+//   // setShowModal(true);
 // }
 
 //   function handleModalClose() {
@@ -176,7 +176,7 @@ function CalendarProp() {
           events={allEvents}
           startAccessor="start"
           endAccessor="end"
-          onSelectEvent={handleEventClick}
+          // onSelectEvent={handleEventClick}
           style={{ height: 600 }}
         />
         <div className="card-actions justify-end pl-2.5 pb-2.5 mt-2.5  ">

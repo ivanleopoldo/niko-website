@@ -12,7 +12,7 @@ function MessageProp() {
       <div className=" w-full  h-[805px] bg-base-100 shadow-xl">
           <div className="avatar flex justify-center">
             <div className="avatar w-24 mb-10 h-24 mt-10 rounded-full ml-2.5 ring ring-success ring-offset-base-100 ring-offset-2 shadow-xl">
-                 <img src={require('../images/her78.png')} alt="Profile User" />
+                 <img src={require('../../src/images/her.png')} alt="Profile User" />
                 </div>
      
         </div>

@@ -4,7 +4,7 @@ import { FupdateProf} from '../../components/Freelance/FupdateProf'
 export function Fprofile() {
   return (
     <div className="card w-96 bg-base-100 shadow-xl">
-    <figure><img src={require('../../images/her78.png')} alt="UserProfile" /></figure>
+    <figure><img src={require('../../images/her.png')} alt="UserProfile" /></figure>
     <div className="card-body">
         <h2 className="card-title">
         Xio Bao Mao

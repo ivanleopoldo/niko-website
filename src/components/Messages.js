@@ -6,7 +6,7 @@ function Messages() {
       <div className="chat chat-start ">
         <div className="chat-image avatar online">
           <div className="w-10 rounded-full">
-            <img src={require("../images/Top KIM.jpg")} alt="ges" />
+            <img src={require('../../src/images/Top KIM.jpg')} alt="ges" />
           </div>
         </div>
         <div className="chat-header">
@@ -19,7 +19,7 @@ function Messages() {
       <div className="chat chat-end">
         <div className="chat-image avatar offline">
           <div className="w-10 rounded-full">
-            <img src={require("../images/her78.png")} alt="msg" />
+            <img src={require("../../src/images/her.png")} alt="msg" />
           </div>
         </div>
         <div className="chat-header">

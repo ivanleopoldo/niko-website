@@ -21,7 +21,7 @@ export function Messagepop() {
         <div className="chat chat-end">
           <div className="chat-image avatar avatar offline">
             <div className="w-10 rounded-full">
-              <img src={require('../images/her78.png')} />
+              <img src={require('../../src/images/her.png')} />
             </div>
           </div>
           <div className="chat-header">

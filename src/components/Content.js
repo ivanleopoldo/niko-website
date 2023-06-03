@@ -47,8 +47,8 @@ function Content() {
                       <div className="avatar">
                         <div className="mask mask-squircle w-12 h-12">
                           <img
-                            src={require("../images/her78.png")}
-                            alt="Avatar Tailwind CSS Component"
+                            src={require("../../src/images/her.png")}
+                            alt="Avatar Tailwind CSS Component" 
                           />
                         </div>
                       </div>
@@ -118,7 +118,7 @@ function Content() {
       </div>
       <Modal isOpen={isModalOpen} onClose={handleModalClose}>
         <Card
-          image={require("../images/her78.png")}
+          image={require("../../src/images/her.png")}
           name="what the dog doin?"
           bio="i woke up in a new bugatti"
           date="01/15/1748"

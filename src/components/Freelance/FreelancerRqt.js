@@ -45,7 +45,7 @@ export function Freelancer_Rqt() {
                     <div className="flex items-center space-x-3">
                         <div className="avatar">
                           <div className="mask mask-squircle w-12 h-12">
-                            <img src={require('../../images/her78.png')} alt="Avatar Tailwind CSS Component" />
+                            <img src={require('../../images/her.png')} alt="Avatar Tailwind CSS Component" />
                           </div>
                         </div>
                         <div>
@@ -75,7 +75,7 @@ export function Freelancer_Rqt() {
       </div>
       <MessageModal isOpen={isModalOpen} onClose={handleModalClose}>
         <Fcard 
-          image={require('../../images/her78.png')} 
+          image={require('../../images/her.png')} 
           name='what the dog doin?'
           bio='i woke up in a new bugatti'
           date='01/15/1748'
