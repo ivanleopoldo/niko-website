@@ -7,8 +7,7 @@ function Calendar() {
             <div>
                 <Navbar/>
             </div>
-            <div
-            > 
+            <div> 
                 <CalendarProp/>
             </div>
            <div>
