@@ -1,7 +1,7 @@
 function CalendarModal({ onClose, onDelete, onEdit }) {
   return (
     <div>
-      <label htmlFor="my-modal-3" className="btn">open modal</label>
+      <label htmlFor="my-modal-3" className="btn btn-success">Edit Event</label>
 
           {/* Put this part before </body> tag */}
           <input type="checkbox" id="my-modal-3" className="modal-toggle" />
