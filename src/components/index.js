@@ -20,7 +20,7 @@ import Uprofile from "./Uprofile";
 import Updateprof from "./Updateprof";
 import CalendarProp from "./CalendarProp";
 import Calendarmodal from "./Calendarmodal";
-
+import ConfirmMessage from "./ConfirmMessage";
 export {
   Card,
   Content,
@@ -39,4 +39,5 @@ export {
   Certificate,
   CalendarProp,
   Calendarmodal,
+  ConfirmMessage,
 };

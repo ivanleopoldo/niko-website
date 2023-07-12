@@ -1,6 +1,30 @@
 import React from 'react'
+import ConfirmMessage from './ConfirmMessage';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Card({image, name, bio, date, tags}) {
+  
+  const notify = (e) => {
+    toast.promise(
+      new Promise((resolve, reject) =>{
+        setTimeout(()=>{
+          resolve() || reject();
+        }, 2000);
+      }),
+      {
+        pending: "Loading Process",
+        success: "Booked Successfully.",
+        error: "Cannot be booked please Try again...",
+      },
+      {
+
+        autoClose: 2000,
+
+      }
+    );
+  };
+
   return (
     <div className='card' >
       <div className="card w-auto bg-base-100 shadow-xs">
@@ -46,13 +70,24 @@ function Card({image, name, bio, date, tags}) {
                  </div>
                 </div>
            <hr></hr>
-            <button className="btn btn-success ml-10 mt-10">Hire now!</button>
-
-            <div>
+           <div><button className="btn btn-success "  onClick={notify}>Hire now </button>
+           <ToastContainer
+              position="top-center"
+              autoClose={2000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="dark"
+              limit={1}
+              />
+              </div>
             </div>
           </div>
         </div>
-      </div>
   );
 }
 

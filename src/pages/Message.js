@@ -17,7 +17,6 @@ export function Message() {
         <div className="flex-grow">
           <MessageProp />
         </div>
-        
         <div>
             <MessageCard2/>
         </div>
