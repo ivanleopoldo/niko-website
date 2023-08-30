@@ -21,6 +21,8 @@ import Updateprof from "./Updateprof";
 import CalendarProp from "./CalendarProp";
 import Calendarmodal from "./Calendarmodal";
 import ConfirmMessage from "./ConfirmMessage";
+import ParaLanding from "./ParaLanding";
+
 export {
   Card,
   Content,
@@ -40,4 +42,5 @@ export {
   CalendarProp,
   Calendarmodal,
   ConfirmMessage,
+  ParaLanding,
 };
