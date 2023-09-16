@@ -6,7 +6,7 @@ export function Messagepop() {
         <div className="chat chat-start ">
           <div className="chat-image avatar avatar online">
             <div className="w-10 rounded-full">
-              <img src={require('../images/Top KIM.jpg')} />
+              <img src={require('../../images/Top KIM.jpg')} />
             </div>
           </div>
           <div className="chat-header">
@@ -21,7 +21,7 @@ export function Messagepop() {
         <div className="chat chat-end">
           <div className="chat-image avatar avatar offline">
             <div className="w-10 rounded-full">
-              <img src={require('../../src/images/her.png')} />
+              <img src={require('../../images/her.png')} />
             </div>
           </div>
           <div className="chat-header">

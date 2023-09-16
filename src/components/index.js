@@ -6,10 +6,10 @@ import Modal from "./Modal";
 import Navbar from "./Navbar";
 import Pagination from "./Pagination";
 import Range from "./Range";
-import MessageModal from "./MessageModal";
-import Messages from "./Messages";
-import MessageProp from "./MessageProp";
-import MessageCard2 from "./MessageCard2";
+import MessageModal from "./messagesProps/MessageModal";
+import Messages from "./messagesProps/Messages";
+import MessageProp from "./messagesProps/MessageProp";
+import MessageCard2 from "./messagesProps/MessageCard2";
 import Certificate from "./Certificate";
 // import FreelancerRqt from "./Freelance/FreelancerRqt";
 // import Fcard from "./Freelance/Fcard";
@@ -22,6 +22,7 @@ import CalendarProp from "./CalendarProp";
 import Calendarmodal from "./Calendarmodal";
 import ConfirmMessage from "./ConfirmMessage";
 import ParaLanding from "./ParaLanding";
+import NavpropTable from "./NavpropTable";
 
 export {
   Card,
@@ -43,4 +44,5 @@ export {
   Calendarmodal,
   ConfirmMessage,
   ParaLanding,
+  NavpropTable as navtable,
 };

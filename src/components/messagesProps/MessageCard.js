@@ -22,7 +22,7 @@ export function MessageCard() {
                 <div className="flex items- space-x-3">
                 <div className="avatar offline">
                     <div className="w-16 rounded-full">
-                    <img src={require('../../src/images/Top KIM.jpg')} alt="User Profile" />
+                    <img src={require('../../images/Top KIM.jpg')} alt="User Profile" />
                     </div>
                 </div>
                 <div>
@@ -47,7 +47,7 @@ export function MessageCard() {
                 <div className="flex items space-x-3">
                 <div className="avatar online">
                     <div className="w-16 rounded-full">
-                    <img src={require('../../src/images/her.png')} alt="Profile" />
+                    <img src={require('../../images/her.png')} alt="Profile" />
                     </div>
                 </div>
                 <div>

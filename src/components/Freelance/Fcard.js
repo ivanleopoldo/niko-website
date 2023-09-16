@@ -1,5 +1,5 @@
 import React from 'react'
-import Messages from '../Messages';
+import Messages from "../messagesProps/Messages";
 
 function Fcard({image, name, bio, date, tags}) {
   return (

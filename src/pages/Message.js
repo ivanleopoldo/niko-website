@@ -1,7 +1,7 @@
 import React from 'react';
 import { Footer, MessageCard2, MessageProp, Navbar } from '../components';
-import MessageCard from '../components/MessageCard';
-import Messagepop from '../components/Messagepop';
+import MessageCard from '../components/messagesProps/MessageCard';
+import Messagepop from '../components/messagesProps/Messagepop';
 
 export function Message() {
   return (

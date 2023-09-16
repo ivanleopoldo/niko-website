@@ -1,5 +1,5 @@
 import React from 'react'
-import Certificate from './Certificate';
+import Certificate from '../Certificate';
 
 export function MessageCard2() {
   return (
@@ -21,7 +21,7 @@ export function MessageCard2() {
                 <div className="flex items- space-x-3">
                 <div className="avatar online">
                     <div className="w-16 rounded-full">
-                    <img src={require('../../src/images/her.png')} alt="User Profile" />
+                    <img src={require('../../images/her.png')} alt="User Profile" />
                     </div>
                 </div>
                 <div>
