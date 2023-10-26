@@ -4,7 +4,7 @@ import { auth } from "../config";
 import { UserAuth } from "../config/context";
 import NavpropTable from "./NavpropTable";
 import MessageCard from "./messagesProps/MessageCard";
-import React, {useState} from "react";
+import React, {useState} from "react"   ;
 function Navbar() {
     const { logout } = UserAuth();
 
@@ -78,7 +78,7 @@ function Navbar() {
 
                     </ul>
                 </div>
-                  {/* Messages */}
+                  {/* Messages */}  
             <div className="absolute right-0 top-5 mr-[53px] dropdown dropdown-end ">
                 <button className="btn btn-ghost btn-circle px-30" onClick={toggleMessageCard}>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
