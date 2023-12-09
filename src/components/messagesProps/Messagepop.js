@@ -2,7 +2,9 @@ import React from 'react'
 
 export function Messagepop() {
   return (
-    <div className='mt-10'>
+    <div className='mt-5'>
+      <div>
+      </div>
         <div className="chat chat-start ">
           <div className="chat-image avatar avatar online">
             <div className="w-10 rounded-full">
@@ -33,7 +35,7 @@ export function Messagepop() {
             Seen at 12:46
           </div>
         </div>
-        <div className=' flex justify-center mt-[330px] '>
+        <div className=' flex justify-center mt-[230px] '>
         <input type="text" placeholder="Reply...." className="input input-bordered w-full max-w-xl" /> 
         <button className="btn btn-success ml-2.5 divide-x">Send</button>
         </div>

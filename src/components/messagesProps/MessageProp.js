@@ -5,8 +5,10 @@ import Messagepop from './Messagepop';
 function MessageProp() {
   return (
     <div>
-
-    
+      <div>
+      </div>
+    <div>
+    </div>
     <div className="flex justify-start ">
       <div className="w-full bg-gray-500 h-[805px] ml-2.5">
       <div className=" w-full  h-[805px] bg-base-100 shadow-xl">
