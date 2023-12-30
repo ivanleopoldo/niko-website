@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import {
   specialization,
@@ -13,16 +14,12 @@ import { Firebase, auth } from "../config";
 
 function Register() {
   const [info, setInfo] = useState({
-    loginInfo: {
-      email: null,
-      password: null,
-    },
     basicInfo: {
-      firstName: null,
-      lastName: null,
+      displayName: null,
+      email: null,
+      uid: null,
       phoneNumber: null,
       bio: null,
-      profImage: null,
       isFreelancer: false,
     },
     locationInfo: {
@@ -35,10 +32,11 @@ function Register() {
     },
     freelanceInfo: {
       specialization: null,
-      certificateImage: null,
       basePrice: 1500,
     },
   });
+
+  const navigate = useNavigate();
 
   const [step, setStep] = useState(1);
   const [errors, setErrors] = useState({});
@@ -83,6 +81,7 @@ function Register() {
 
   const handleSubmit = (e) => {
     controller.signUp(info);
+    navigate("/home");
   };
 
   const formSteps = () => {
@@ -90,51 +89,8 @@ function Register() {
       case 1: {
         return (
           <div className="form-control content-center">
-            <h1 className="text-5xl py-2 font-bold">Sign Up</h1>
-            {/* Email */}
-            <label className="label">
-              <span className="label-text">Email</span>
-            </label>
-            <input
-              name="email"
-              onChange={handleChange}
-              value={info.loginInfo.email === null ? "" : info.loginInfo.email}
-              type="email"
-              placeholder="Email"
-              className={
-                "input input-bordered w-full max-w-xs " +
-                (errors.email && "border-rose-500")
-              }
-              required
-            />
-            {errors.email && (
-              <span className="label-text text-rose-500">{errors.email}</span>
-            )}
-            {/* Password */}
-            <label className="label">
-              <span className="label-text">Password</span>
-            </label>
-            <input
-              name="password"
-              onChange={handleChange}
-              value={
-                info.loginInfo.password === null ? "" : info.loginInfo.password
-              }
-              type="password"
-              placeholder="Password"
-              className={
-                "input input-bordered w-full max-w-xs " +
-                (errors.password && "border-rose-500")
-              }
-              required
-            />
-            {errors.password && (
-              <span className="label-text text-rose-500">
-                {errors.password}
-              </span>
-            )}
-            <div className="divider"></div>
-            <div className="input-group">
+            <h1 className="text-4xl py-2 font-bold">Additional Info</h1>
+            <div className="input-group mt-3">
               <span className="font-bold input-bordered py-1">
                 Do you want to be a Freelancer?
               </span>
@@ -151,11 +107,7 @@ function Register() {
                 checked={info.basicInfo.isFreelancer}
               />
             </div>
-            <button
-              disabled={!(isAnError("email") && isAnError("password"))}
-              onClick={nextStep}
-              className="btn btn-primary my-4"
-            >
+            <button onClick={nextStep} className="btn btn-primary my-4">
               Next
             </button>
           </div>
@@ -164,7 +116,7 @@ function Register() {
       case 2: {
         return (
           <div>
-            <h1 className="text-5xl py-2 font-bold">Sign Up</h1>
+            <h1 className="text-4xl py-2 font-bold">Additional Info</h1>
             {/* Location */}
             <label className="label">
               <span className="label-text">Province</span>
@@ -280,12 +232,8 @@ function Register() {
                   <span className="label-text-alt">Optional</span>
                 </label>
                 <input
-                  value={
-                    info.loginInfo.workAddress === null
-                      ? ""
-                      : info.loginInfo.workAddress
-                  }
                   onChange={(e) => handler.LocationInfoHandler(e)}
+                  name="workAddress"
                   type="text"
                   placeholder="Work Address"
                   className="input input-bordered w-full max-w-xs "
@@ -334,50 +282,7 @@ function Register() {
       case 3: {
         return (
           <div>
-            <h1 className="text-5xl py-2 font-bold">Sign Up</h1>
-            <label className="label">
-              <span className="label-text">First Name</span>
-            </label>
-            <input
-              name="firstName"
-              onChange={handleChange}
-              type="text"
-              placeholder="First Name"
-              value={
-                info.loginInfo.firstName === null
-                  ? ""
-                  : info.loginInfo.firstName
-              }
-              className={
-                "input input-bordered w-full max-w-xs " +
-                (errors.firstName && "border-rose-500")
-              }
-              required
-            />
-            {errors.firstName && (
-              <span className="label-text text-rose-500">
-                {errors.firstName}
-              </span>
-            )}
-            <label className="label">
-              <span className="label-text">Last Name</span>
-            </label>
-            <input
-              name="lastName"
-              onChange={handleChange}
-              type="text"
-              placeholder="Last Name"
-              className={
-                "input input-bordered w-full max-w-xs " +
-                (errors.lastName && "border-rose-500")
-              }
-              required
-            />
-            {errors.lastName && (
-              <span className="label-text text-rose-500">
-                {errors.lastName}
-              </span>
-            )}
+            <h1 className="text-4xl py-2 font-bold">Additional Info</h1>
             <label className="label">
               <span className="label-text">Phone Number</span>
             </label>
@@ -389,9 +294,9 @@ function Register() {
                 type="tel"
                 placeholder="Phone Number"
                 value={
-                  info.loginInfo.phoneNumber === null
+                  info.basicInfo.phoneNumber === null
                     ? ""
-                    : info.loginInfo.phoneNumber
+                    : info.basicInfo.phoneNumber
                 }
                 className={
                   "input input-bordered w-full max-w-xs " +
@@ -406,25 +311,6 @@ function Register() {
               </span>
             )}
             <label className="label">
-              <span className="label-text">Profile Image</span>
-              <span className="label-text-alt">Optional</span>
-            </label>
-            <input
-              name="profImage"
-              accept=".jpg, .png, .jpeg, .PNG, .JPEG, .JPG"
-              onChange={(e) => {
-                setInfo({
-                  ...info,
-                  basicInfo: {
-                    ...info.basicInfo,
-                    profImage: e.target.files[0],
-                  },
-                });
-              }}
-              type="file"
-              className="file-input file-input-bordered w-full max-w-xs"
-            />
-            <label className="label">
               <span className="label-text">Biography</span>
               <span className="label-text-alt">Optional</span>
             </label>
@@ -432,7 +318,7 @@ function Register() {
               name="bio"
               onChange={(e) => handler.BasicInfoHandler(e)}
               placeholder="Tell us about yourself!"
-              value={info.loginInfo.bio === null ? "" : info.loginInfo.bio}
+              value={info.basicInfo.bio === null ? "" : info.basicInfo.bio}
               className="textarea textarea-bordered w-full max-w-xs"
             />
             {errors.bio && (
@@ -473,38 +359,6 @@ function Register() {
                   value={info.freelanceInfo.basePrice}
                   onChange={(e) => handler.FreelancerInfoHandler(e)}
                 />
-                <label className="label">
-                  <span className="label-text">Certificate</span>
-                </label>
-                <input
-                  name="certificateImage"
-                  accept=".jpg, .png, .jpeg, .PNG, .JPEG, .JPG"
-                  onChange={(e) => {
-                    setInfo({
-                      ...info,
-                      freelanceInfo: {
-                        ...info.freelanceInfo,
-                        certificateImage: e.target.files[0],
-                      },
-                    });
-                  }}
-                  value={
-                    info.freelanceInfo.certificateImage === null
-                      ? ""
-                      : info.freelanceInfo.certificateImage
-                  }
-                  type="file"
-                  className={
-                    "file-input file-input-bordered w-full max-w-xs " +
-                    (errors.phoneNumber && "border-rose-500")
-                  }
-                  required
-                />
-                {errors.certificateImage && (
-                  <span className="label-text text-rose-500">
-                    {errors.certificateImage}
-                  </span>
-                )}
               </>
             )}
             <button
@@ -513,20 +367,27 @@ function Register() {
             >
               Back
             </button>
-            <button
-              onClick={handleSubmit}
-              disabled={
-                !(
-                  isAnError("firstName") &&
-                  isAnError("lastName") &&
-                  isAnError("phoneNumber")
-                )
-              }
-              type="submit"
-              className="btn btn-primary float-right my-4"
-            >
-              Submit
-            </button>
+            {info.basicInfo.isFreelancer ? (
+              <button
+                onClick={handleSubmit}
+                disabled={
+                  !(isAnError("phoneNumber") && isAnError("specialization"))
+                }
+                type="submit"
+                className="btn btn-primary float-right my-4"
+              >
+                Submit
+              </button>
+            ) : (
+              <button
+                onClick={handleSubmit}
+                disabled={!isAnError("phoneNumber")}
+                type="submit"
+                className="btn btn-primary float-right my-4"
+              >
+                Submit
+              </button>
+            )}
           </div>
         );
       }

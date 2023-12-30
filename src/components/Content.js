@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Modal, Card } from "../components";
 import { Firebase } from "../config";
 import { onSnapshot } from "firebase/firestore";
+import { Link } from "react-router-dom";
 
 function Content() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -11,7 +12,7 @@ function Content() {
   const handleModalClose = () => setIsModalOpen(false);
 
   useEffect(() => {
-    onSnapshot(Firebase.fetchAllData("professionals"), (snapshot) => {
+    onSnapshot(Firebase.fetchAllFreelancerData(), (snapshot) => {
       setData(snapshot.docs.map((doc) => doc.data()));
     });
   }, [data]);
@@ -28,17 +29,16 @@ function Content() {
               </th>
               <th>Name</th>
               <th>Job</th>
-              <th>Certification</th>
-              <th>Rating</th>
-              <th>View</th>
+              <th>Province</th>
+              <th>City</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
             {/* row 1 */}
-            {data.map(({ full_name, specialization, bio, tags }, index) => {
+            {data.map(({ basicInfo, freelanceInfo, locationInfo }, index) => {
               return (
-                <tr key={index}>
+                <tr key={index} name={basicInfo.uid}>
                   <th>
                     <label></label>
                   </th>
@@ -47,19 +47,15 @@ function Content() {
                       <div className="avatar">
                         <div className="mask mask-circle w-12 h-12">
                           <img
-                            src={require("../../src/images/her.png")}
-                            alt="Avatar Tailwind CSS Component" 
+                            src={basicInfo.profImage}
+                            alt="Avatar Tailwind CSS Component"
                           />
                         </div>
                       </div>
                       <div>
-                        <div className="font-bold">{full_name}</div>
-                        <div className="text-sm opacity-50">{bio}</div>
-                        <div
-                          className="text-sm opacity-50"
-                          placeholder="Year started: "
-                        >
-                          {tags[0]}
+                        <div className="font-bold">{basicInfo.displayName}</div>
+                        <div className="text-sm opacity-50">
+                          {basicInfo.bio}
                         </div>
                       </div>
                     </div>
@@ -67,48 +63,23 @@ function Content() {
                   <td className="text-center">
                     {/* Job */}
                     <span className="badge badge-ghost badge-sm mt-auto">
-                      {specialization}
+                      {freelanceInfo.specialization}
                     </span>
                   </td>
-                  <td>Tesda Certified</td>
-                  <td>
-                    <div className="rating rating-md btn btn-disabled">
-                      <input
-                        type="radio"
-                        name="rating-7"
-                       
-                        className="mask mask-star-2 bg-orange-400"
-                      />
-                      <input
-                        type="radio"
-                        name="rating-7"
-                        className="mask mask-star-2 bg-orange-400"
-                      />
-                      <input
-                        type="radio"
-                        name="rating-7"
-                        className="mask mask-star-2 bg-orange-400"
-                      />
-                      <input
-                        type="radio"
-                        name="rating-7"
-                        className="mask mask-star-2 bg-orange-400"
-                      />
-                      <input
-                        type="radio"
-                        name="rating-7"
-                        className="mask mask-star-2 bg-orange-400"
-                      />
-                    </div>
+                  <td className="text-center">
+                    <div>{locationInfo.provName}</div>
                   </td>
-                  <th>
-                    <button
-                      className="btn btn-outline btn-info"
-                      onClick={handleModalOpen}
+                  <td className="text-center">
+                    <div>{locationInfo.city}</div>
+                  </td>
+                  <td className="text-center">
+                    <Link
+                      to={`/message/${basicInfo.uid}`}
+                      className="bg-green-400 py-1 px-4 rounded-lg text-black font-bold"
                     >
-                      Details
-                    </button>
-                  </th>
+                      Hire
+                    </Link>
+                  </td>
                 </tr>
               );
             })}
@@ -117,15 +88,6 @@ function Content() {
           {/* foot */}
         </table>
       </div>
-      <Modal isOpen={isModalOpen} onClose={handleModalClose}>
-        <Card
-          image={require("../../src/images/her.png")}
-          name="what the dog doin?"
-          bio="i woke up in a new bugatti"
-          date="01/15/1748"
-          tags={["Electrician", "3 Years Experience"]}
-        />
-      </Modal>
     </div>
   );
 }

@@ -10,7 +10,6 @@ import {
   ProfileLance,
   Message,
   Error,
-  Calendar,
   Landing,
 } from "./pages";
 import { AuthProvider } from "./config/context/";
@@ -24,14 +23,20 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/home" element={<Home />} />
+          <Route
+            path="/home"
+            element={
+              <PrivateRoute>
+                <Home />
+              </PrivateRoute>
+            }
+          />
           <Route path="/register" element={<Register />} />
           <Route path="/freelance" element={<Freelance />} />
-          <Route path="/Jobs" element={<Jobs />} />
+          <Route path="/jobs" element={<Jobs />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/profileLance" element={<ProfileLance />} />
-          <Route path="/Message" element={<Message />} />
-          <Route path="/Calendar" element={<Calendar />} />
+          <Route path="/message/:uid" element={<Message />} />
           <Route path="*" element={<Error />} />
         </Routes>
       </ParallaxProvider>

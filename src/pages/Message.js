@@ -1,9 +1,10 @@
-import React from 'react';
-import { Footer, MessageCard2, MessageProp, Navbar } from '../components';
-import MessageCard from '../components/messagesProps/MessageCard';
-import Messagepop from '../components/messagesProps/Messagepop';
+import React from "react";
+import { Footer, MessageCard2, MessageProp, Navbar } from "../components";
+import MessageCard from "../components/messagesProps/MessageCard";
+import { useParams } from "react-router-dom";
 
 export function Message() {
+  let { uid } = useParams();
   return (
     <div>
       <div>
@@ -11,15 +12,15 @@ export function Message() {
         <hr />
       </div>
       <div className="flex">
-        <div>
-          <MessageCard />
-        </div>
+        {/* <div>
+          <MessageCard uid={uid} />
+        </div> */}
         <div className="flex-grow">
-          <MessageProp />
+          <MessageProp uid={uid} />
         </div>
-        <div>
-            <MessageCard2/>
-        </div>
+        {/* <div>
+          <MessageCard2 />
+        </div> */}
       </div>
       <div>
         <Footer />

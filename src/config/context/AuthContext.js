@@ -6,9 +6,10 @@ import {
   onAuthStateChanged,
   signInWithPopup,
   signOut,
+  getAdditionalUserInfo,
 } from "firebase/auth";
 
-import { auth } from "..";
+import { Firebase, auth } from "..";
 
 // create context
 const AuthContext = createContext();
@@ -16,11 +17,17 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isNew, setNew] = useState(true);
 
   // signin with google
   const signinWithGoogle = () => {
     const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider);
+    signInWithPopup(auth, provider).then((result) => {
+      setNew(
+        result.user.metadata.creationTime ===
+          result.user.metadata.lastSignInTime
+      );
+    });
   };
 
   // signin w/o google
@@ -37,6 +44,7 @@ export const AuthProvider = ({ children }) => {
 
   const value = {
     currentUser,
+    isNew,
     signinWithGoogle,
     signIn,
     logout,
@@ -48,7 +56,7 @@ export const AuthProvider = ({ children }) => {
       setCurrentUser(user);
       setLoading(false);
     });
-    return unsubscribe;
+    return () => unsubscribe;
   }, []);
 
   return (
