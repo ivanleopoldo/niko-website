@@ -5,82 +5,61 @@ import {
   ref,
   getDownloadURL,
   uploadBytesResumable,
-  uploadString,
 } from "./firebase";
-import { collection, setDoc, doc } from "firebase/firestore";
+import { doc, setDoc, collection } from "firebase/firestore";
 
 class FirebaseConnection {
-  fetchAllData(collection_name) {
-    return collection(db, collection_name);
+  addData(uid, info) {
+    this.updateDict(info).then((newInfo) => {
+      const collRef = collection(db, "users");
+      const docRef = doc(collRef, uid);
+      setDoc(docRef, newInfo);
+    });
   }
-  addDataWithGoogle(info) {}
-  addData(info) {
-    auth()
-      .createUserWithEmailAndPassword(
-        info.loginInfo.email,
-        info.loginInfo.password
-      )
-      .then(() => {
-        const newInfo = this.updateDict(info);
-        const userRef = doc(db, "users", auth.currentUser.uid, "loginInfo");
-        setDoc(
-          userRef,
-          {
-            ...newInfo,
-          },
-          { merge: true }
-        );
-      });
-  }
-  updateDict(info) {
+  async updateDict(info) {
     const urls = this.uploadImage(info);
+    alert(urls);
     if (urls.length > 1) {
       return {
         ...info,
         basicInfo: {
           ...info.basicInfo,
-          profImage: urls[0],
+          profImage: null,
         },
         freelanceInfo: {
           ...info.freelanceInfo,
-          certificateImage: urls[1],
+          certificateImage: urls.length !== 0 ? urls[1] : null,
+        },
+      };
+    } else if (info.basicInfo.isFreelance) {
+      return {
+        ...info,
+        basicInfo: {
+          ...info.basicInfo,
+          profImage: urls.length !== 0 ? urls[0] : null,
+        },
+      };
+    } else {
+      return {
+        ...info,
+        basicInfo: {
+          ...info.basicInfo,
         },
       };
     }
-    return {
-      ...info,
-      basicInfo: {
-        ...info.basicInfo,
-        profImage: urls[0],
-      },
-    };
   }
   uploadImage(info) {
-    const [urls, setUrls] = [];
+    const urls = [];
     const images = [
       info.basicInfo.profImage,
       info.freelanceInfo.profImage,
-    ].filter((img) => {
-      return img !== null;
-    });
+    ].filter((img) => img !== null);
 
     images.map((img) => {
-      const storageRef = ref(
-        storage,
-        `images/${auth.currentUser.uid}/profImages/${img}`
-      );
-      const uploadTask = uploadBytesResumable(storageRef, img);
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {},
-        (err) => console.log(err),
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-            setUrls([...urls, url]);
-          });
-        }
-      );
+      const storageRef = ref(storage, `images/${auth.currentUser.uid}/profImg`);
+      uploadBytesResumable(storageRef, img);
     });
+
     return urls;
   }
 }

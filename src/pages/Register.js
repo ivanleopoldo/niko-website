@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import GoogleButton from "react-google-button";
 
 import {
   specialization,
@@ -9,6 +8,8 @@ import {
 import { Range } from "../components";
 
 import { RegisterHandler, ValidationHandler } from "../utils/handlers";
+import { RegisterController } from "../utils/controllers";
+import { Firebase, auth } from "../config";
 
 function Register() {
   const [info, setInfo] = useState({
@@ -20,7 +21,6 @@ function Register() {
       firstName: null,
       lastName: null,
       phoneNumber: null,
-      birthdate: null,
       bio: null,
       profImage: null,
       isFreelancer: false,
@@ -28,8 +28,8 @@ function Register() {
     locationInfo: {
       provName: null,
       provCode: null,
-      city: null,
       address: null,
+      city: null,
       workAddress: null,
       zipCode: null,
     },
@@ -59,6 +59,7 @@ function Register() {
 
   const handler = new RegisterHandler(callback, info);
   const validation = new ValidationHandler(handler, setErrorState, provinces);
+  const controller = new RegisterController(auth, Firebase);
 
   const nextStep = () => {
     setStep(step + 1);
@@ -75,14 +76,14 @@ function Register() {
 
   const handleChange = (event) => {
     event.preventDefault();
-
     let name = event.target.name;
     let val = event.target.value;
-
     validation.validateSignUp(event, name, val);
   };
 
-  const handleSubmit = async (e) => {};
+  const handleSubmit = (e) => {
+    controller.signUp(info);
+  };
 
   const formSteps = () => {
     switch (step) {
@@ -132,11 +133,6 @@ function Register() {
                 {errors.password}
               </span>
             )}
-            <div className="divider">OR</div>
-            <GoogleButton
-              style={{ width: "100%" }}
-              label="Sign Up with Google"
-            />
             <div className="divider"></div>
             <div className="input-group">
               <span className="font-bold input-bordered py-1">
@@ -144,9 +140,14 @@ function Register() {
               </span>
               <input
                 name="isFreelancer"
-                onChange={(e) => handler.BasicInfoHandler(e)}
                 type="checkbox"
-                className="checkbox checkbox-primary py-4 px-4"
+                onChange={(e) =>
+                  setInfo({
+                    ...info,
+                    basicInfo: { isFreelancer: e.target.checked },
+                  })
+                }
+                className="checkbox checkbox-primary py-4 px-4 focus:border-transparent focus:ring-0"
                 checked={info.basicInfo.isFreelancer}
               />
             </div>
@@ -170,7 +171,24 @@ function Register() {
             </label>
             <select
               name="province"
-              onChange={handleChange}
+              onChange={(e) => {
+                const selected = provinces.find(
+                  (item) => item.name === e.target.value
+                );
+                setInfo({
+                  ...info,
+                  locationInfo: {
+                    ...info.locationInfo,
+                    provName: selected.name,
+                    provCode: selected.prov_code,
+                  },
+                });
+              }}
+              selected={
+                info.locationInfo.provName === null
+                  ? ""
+                  : info.locationInfo.provName
+              }
               className="select select-bordered w-full max-w-xs"
               required
             >
@@ -204,6 +222,7 @@ function Register() {
                 <select
                   name="city"
                   onChange={handleChange}
+                  value={info.locationInfo.city}
                   className="select select-bordered w-full max-w-xs"
                   required
                 >
@@ -214,7 +233,6 @@ function Register() {
                     ({ name, prov_code, mun_code }) => {
                       return (
                         <option
-                          value={info.locationInfo.city}
                           key={name}
                           selected={
                             info.locationInfo.city === name ? true : false
@@ -262,16 +280,15 @@ function Register() {
                   <span className="label-text-alt">Optional</span>
                 </label>
                 <input
-                  onChange={(e) => handler.LocationInfoHandler(e)}
                   value={
-                    info.locationInfo.workAddress === null
+                    info.loginInfo.workAddress === null
                       ? ""
-                      : info.locationInfo.workAddress
+                      : info.loginInfo.workAddress
                   }
+                  onChange={(e) => handler.LocationInfoHandler(e)}
                   type="text"
                   placeholder="Work Address"
                   className="input input-bordered w-full max-w-xs "
-                  required
                 />
               </>
             )}
@@ -324,13 +341,13 @@ function Register() {
             <input
               name="firstName"
               onChange={handleChange}
-              value={
-                info.basicInfo.firstName === null
-                  ? ""
-                  : info.basicInfo.firstName
-              }
               type="text"
               placeholder="First Name"
+              value={
+                info.loginInfo.firstName === null
+                  ? ""
+                  : info.loginInfo.firstName
+              }
               className={
                 "input input-bordered w-full max-w-xs " +
                 (errors.firstName && "border-rose-500")
@@ -348,9 +365,6 @@ function Register() {
             <input
               name="lastName"
               onChange={handleChange}
-              value={
-                info.basicInfo.lastName === null ? "" : info.basicInfo.lastName
-              }
               type="text"
               placeholder="Last Name"
               className={
@@ -372,13 +386,13 @@ function Register() {
               <input
                 name="phoneNumber"
                 onChange={handleChange}
-                value={
-                  info.basicInfo.phoneNumber === null
-                    ? ""
-                    : info.basicInfo.phoneNumber
-                }
                 type="tel"
                 placeholder="Phone Number"
+                value={
+                  info.loginInfo.phoneNumber === null
+                    ? ""
+                    : info.loginInfo.phoneNumber
+                }
                 className={
                   "input input-bordered w-full max-w-xs " +
                   (errors.phoneNumber && "border-rose-500")
@@ -398,15 +412,17 @@ function Register() {
             <input
               name="profImage"
               accept=".jpg, .png, .jpeg, .PNG, .JPEG, .JPG"
-              onChange={(e) => handler.BasicInfoHandler(e)}
-              value={
-                info.basicInfo.profImage === null
-                  ? ""
-                  : info.basicInfo.profImage
-              }
+              onChange={(e) => {
+                setInfo({
+                  ...info,
+                  basicInfo: {
+                    ...info.basicInfo,
+                    profImage: e.target.files[0],
+                  },
+                });
+              }}
               type="file"
               className="file-input file-input-bordered w-full max-w-xs"
-              required
             />
             <label className="label">
               <span className="label-text">Biography</span>
@@ -415,8 +431,8 @@ function Register() {
             <textarea
               name="bio"
               onChange={(e) => handler.BasicInfoHandler(e)}
-              value={info.basicInfo.bio === null ? "" : info.basicInfo.bio}
               placeholder="Tell us about yourself!"
+              value={info.loginInfo.bio === null ? "" : info.loginInfo.bio}
               className="textarea textarea-bordered w-full max-w-xs"
             />
             {errors.bio && (
@@ -459,12 +475,19 @@ function Register() {
                 />
                 <label className="label">
                   <span className="label-text">Certificate</span>
-                  <span className="label-text-alt">Optional</span>
                 </label>
                 <input
                   name="certificateImage"
                   accept=".jpg, .png, .jpeg, .PNG, .JPEG, .JPG"
-                  onChange={(e) => handler.FreelancerInfoHandler(e)}
+                  onChange={(e) => {
+                    setInfo({
+                      ...info,
+                      freelanceInfo: {
+                        ...info.freelanceInfo,
+                        certificateImage: e.target.files[0],
+                      },
+                    });
+                  }}
                   value={
                     info.freelanceInfo.certificateImage === null
                       ? ""
@@ -491,6 +514,7 @@ function Register() {
               Back
             </button>
             <button
+              onClick={handleSubmit}
               disabled={
                 !(
                   isAnError("firstName") &&
@@ -498,67 +522,8 @@ function Register() {
                   isAnError("phoneNumber")
                 )
               }
-              onClick={nextStep}
               type="submit"
               className="btn btn-primary float-right my-4"
-            >
-              Next
-            </button>
-          </div>
-        );
-      }
-      case 4: {
-        return (
-          <div>
-            <label className="label">
-              <span className="label-text">{info.loginInfo.email}</span>
-            </label>
-            <label className="label">
-              <span className="label-text">{info.loginInfo.password}</span>
-            </label>
-            <label className="label">
-              <span className="label-text">{info.basicInfo.profImage}</span>
-            </label>
-            <label className="label">
-              <span className="label-text">{info.basicInfo.firstName}</span>
-            </label>
-            <label className="label">
-              <span className="label-text">{info.basicInfo.lastName}</span>
-            </label>
-            <label className="label">
-              <span className="label-text">{info.basicInfo.birthdate}</span>
-            </label>
-            <label className="label">
-              <span className="label-text">{info.basicInfo.bio}</span>
-            </label>
-            <label className="label">
-              <span className="label-text">{info.locationInfo.address}</span>
-            </label>
-            <label className="label">
-              <span className="label-text">
-                {info.locationInfo.workAddress}
-              </span>
-            </label>
-            <label className="label">
-              <span className="label-text">{info.locationInfo.zipCode}</span>
-            </label>
-            <label className="label">
-              <span className="label-text">
-                {info.freelanceInfo.certificateImage}
-              </span>
-            </label>
-            <label className="label">
-              <span className="label-text">{info.freelanceInfo.basePrice}</span>
-            </label>
-            <button
-              onClick={prevStep}
-              className="btn btn-primary float-left my-4"
-            >
-              Back
-            </button>
-            <button
-              onClick={handleSubmit}
-              className="btn btn-success float-right my-4"
             >
               Submit
             </button>
@@ -581,9 +546,6 @@ function Register() {
             </li>
             <li className={"step " + (step > 2 ? "step-primary" : "")}>
               Personal Info
-            </li>
-            <li className={"step " + (step > 3 ? "step-primary" : "")}>
-              Finished
             </li>
           </ul>
           {formSteps()}

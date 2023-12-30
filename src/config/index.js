@@ -1,2 +1,6 @@
-export { auth } from "./firebase";
+export {
+  auth,
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+} from "./firebase";
 export { Firebase } from "./connection";

@@ -1,7 +1,7 @@
 import validator from "validator";
 import { validatorOptions } from "../../config/constants";
 
-function ValidationHandler(handler, setErrorState, provinces = []) {
+function ValidationHandler(handler, setErrorState, provinces) {
   return {
     validateSignUp: function (event, name, value) {
       switch (name) {
@@ -39,18 +39,18 @@ function ValidationHandler(handler, setErrorState, provinces = []) {
             setErrorState(name);
           }
 
-          const selected = provinces.find((entry) => entry.name === value);
+          const selected = provinces.find((item) => item.name === value);
 
           handler.LocationInfoHandler(event, selected);
           break;
         }
         case "city": {
           if (value === null) {
-            setErrorState(name, "You must select a province");
+            setErrorState(name, "You must select a city");
           } else {
             setErrorState(name);
           }
-          handler.LocationInfoHandler(event);
+          handler.LocationInfoHandler(event, null);
           break;
         }
         case "address": {
@@ -59,7 +59,7 @@ function ValidationHandler(handler, setErrorState, provinces = []) {
           } else {
             setErrorState(name);
           }
-          handler.LocationInfoHandler(event);
+          handler.LocationInfoHandler(event, null);
           break;
         }
         case "zipCode": {
@@ -74,7 +74,7 @@ function ValidationHandler(handler, setErrorState, provinces = []) {
           } else {
             setErrorState(name);
           }
-          handler.LocationInfoHandler(event);
+          handler.LocationInfoHandler(event, null);
           break;
         }
         case "firstName": {
@@ -114,7 +114,7 @@ function ValidationHandler(handler, setErrorState, provinces = []) {
           } else {
             setErrorState(name);
           }
-          handler.FreelancerInfo(event);
+          handler.FreelancerInfoHandler(event);
           break;
         }
         case "certificateImage": {
@@ -122,7 +122,7 @@ function ValidationHandler(handler, setErrorState, provinces = []) {
             setErrorState(name, "Please upload an image of your certification");
           }
 
-          handler.FreelancerInfo(event);
+          handler.FreelancerInfoHandler(event);
           break;
         }
         default: {
